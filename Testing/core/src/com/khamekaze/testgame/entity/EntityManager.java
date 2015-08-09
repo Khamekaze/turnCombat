@@ -8,6 +8,7 @@ import com.khamekaze.testgame.MainGame;
 public class EntityManager {
 	
 	private final Array<Entity> entities = new Array<Entity>();
+	private Array<Enemy> enemiesArr = new Array<Enemy>();
 	private final Player player;
 	private Enemy enemy;
 
@@ -16,6 +17,7 @@ public class EntityManager {
 		for(int i = 0; i < enemies; i++) {
 			enemy = new Enemy(new Vector2(-50, MainGame.HEIGHT / 2 - 175), 150, 10, 225);
 			entities.add(enemy);
+			enemiesArr.add(enemy);
 		}
 		entities.add(player);
 	}
@@ -42,5 +44,9 @@ public class EntityManager {
 	
 	public Array<Entity> getEntities() {
 		return entities;
+	}
+	
+	public Array<Enemy> getEnemies() {
+		return enemiesArr;
 	}
 }

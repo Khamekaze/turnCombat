@@ -105,6 +105,8 @@ public class ActionMenuManager {
 				Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			actionMenu.setCurrentMenu(ActionMenu.ATTACK_MENU);
 			waiting = 0;
+			
+			//Item menu
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.ITEM_MENU) {
 			for(Item item : actionMenu.getItemMenu().getItems()) {
 				if(inputManager.getMouseHitbox().overlaps(item.getHitbox()) &&
@@ -124,69 +126,65 @@ public class ActionMenuManager {
 				actionMenu.setCurrentMenu(ActionMenu.BASE_MENU);
 				waiting = 0;
 			}
+			
+			//Magic Menu
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.MAGIC_MENU) {
 			for(Spell spell : actionMenu.getMagicMenu().getSpells()) {
 				if(inputManager.getMouseHitbox().overlaps(spell.getHitbox()) &&
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 					spell.selectSpell();
+					currentSpell = spell;
 					waiting = 0;
+					System.out.println("Selected spell");
+					actionMenu.setCurrentMenu(ActionMenu.USE_SPELL);
 				}
 			}
 			
+			//Go back to base menu
 			if(actionMenu.getCurrentMenu() == ActionMenu.MAGIC_MENU &&
 					inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
 					Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-				for(Spell spell : actionMenu.getMagicMenu().getSpells()) {
-					spell.setIsSelected(false);
-				}
+				actionMenu.getMagicMenu().resetSpells();
+				currentSpell = null;
 				actionMenu.setCurrentMenu(ActionMenu.BASE_MENU);
 				waiting = 0;
 			}
-			
-			if(actionMenu.getCurrentMenu() == ActionMenu.MAGIC_MENU) {
-				for(Spell spell : actionMenu.getMagicMenu().getSpells()) {
-					if(spell.getIsSelected()) {
-						if(spell.getType() == Spell.DEFENSIVE) {
-							waiting = 0;
-							currentSpell = spell;
-//							spell.setIsSelected(false);
-							actionMenu.setCurrentMenu(ActionMenu.DEFENSIVE_SPELL);
-						} else if(spell.getType() == Spell.OFFENSIVE)
-							waiting = 0;
-							currentSpell = spell;
-//							spell.setIsSelected(false);
-							actionMenu.setCurrentMenu(ActionMenu.OFFENSIVE_SPELL);
+		} else if(actionMenu.getCurrentMenu() == ActionMenu.USE_SPELL) {
+			System.out.println("USE SPELL");
+			if(currentSpell.getType() == Spell.DEFENSIVE) {
+				if(inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+					System.out.println("USING DEFENSIVE SPELL");
+					entityManager.getPlayer().restoreHp(currentSpell.getAmount());
+					entityManager.getPlayer().resetActionTime();
+					currentSpell = null;
+					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
+					waiting = 0;
+				} else if(!inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+					actionMenu.getMagicMenu().resetSpells();
+					actionMenu.setCurrentMenu(ActionMenu.MAGIC_MENU);
+				}
+			} else if(currentSpell.getType() == Spell.OFFENSIVE) {
+				Player player = entityManager.getPlayer();
+				for(Enemy e : entityManager.getEnemies()) {
+					if(inputManager.getMouseHitbox().overlaps(e.getHitbox()) &&
+							Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+						System.out.println("USING OFFENSIVE SPELL");
+						e.takeDamage(currentSpell.getAmount());
+						player.resetActionTime();
+						currentSpell = null;
+						actionMenu.setCurrentMenu(ActionMenu.CLOSED);
+						waiting = 0;
+					} else if(!inputManager.getMouseHitbox().overlaps(e.getHitbox()) &&
+							Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+						System.out.println("Going back to magic menu");
+						actionMenu.getMagicMenu().resetSpells();
+						actionMenu.setCurrentMenu(ActionMenu.MAGIC_MENU);
 					}
 				}
 			}
-		} else if(actionMenu.getCurrentMenu() == ActionMenu.DEFENSIVE_SPELL) {
-			for(Entity e : entityManager.getEntities()) {
-				if(inputManager.getMouseHitbox().overlaps(e.getHitbox()) && e instanceof Player &&
-						Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					waiting = 0;
-					e.restoreHp(currentSpell.getAmount());
-					resetTurn(entityManager.getPlayer());
-					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
-				} else {
-					waiting = 0;
-					actionMenu.setCurrentMenu(ActionMenu.MAGIC_MENU);
-				}
-			}
-		} 
-//		else if(actionMenu.getCurrentMenu() == ActionMenu.OFFENSIVE_SPELL) {
-//			for(Entity e : entityManager.getEntities()) {
-//				if(inputManager.getMouseHitbox().overlaps(e.getHitbox()) && e instanceof Enemy &&
-//						Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-//					waiting = 0;
-//					e.takeDamage(currentSpell.getAmount());
-//					resetTurn(entityManager.getPlayer());
-//					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
-//				} else {
-//					waiting = 0;
-//					actionMenu.setCurrentMenu(ActionMenu.MAGIC_MENU);
-//				}
-//			}
-//		}
+		}
 	}
 	
 	public void resetSpell() {

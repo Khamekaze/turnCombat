@@ -42,6 +42,12 @@ public class MagicMenu {
 		}
 	}
 	
+	public void resetSpells() {
+		for(Spell spell : spells) {
+			spell.setIsSelected(false);
+		}
+	}
+	
 	public Array<Spell> getSpells() {
 		return spells;
 	}

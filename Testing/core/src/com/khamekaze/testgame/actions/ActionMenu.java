@@ -9,7 +9,7 @@ import com.khamekaze.testgame.gui.Button;
 public class ActionMenu {
 	
 	public static final int CLOSED = 80085, BASE_MENU = 0, ATTACK_MENU = 1, MAGIC_MENU = 2, ITEM_MENU = 3, NORMAL_ATTACK = 4,
-							SPECIAL_ATTACK = 5, OFFENSIVE_SPELL = 6, DEFENSIVE_SPELL = 7, OFFENSIVE_ITEM = 8, DEFENSIVE_ITEM = 9;
+							SPECIAL_ATTACK = 5, USE_SPELL = 6, USE_ITEM = 7;
 	private int currentMenu;
 	private float x, y, width, height, leftX, leftY, topX, topY, rightX, rightY;
 	private Array<Button> buttons;
@@ -103,17 +103,10 @@ public class ActionMenu {
 			itemMenu.render(sb);
 			break;
 			
-		case OFFENSIVE_SPELL:
+		case USE_SPELL:
 			break;
 			
-		case DEFENSIVE_SPELL:
-			break;
-			
-		case OFFENSIVE_ITEM:
-			break;
-			
-		case DEFENSIVE_ITEM:
-			break;
+		case USE_ITEM:
 			
 		default:
 			break;
