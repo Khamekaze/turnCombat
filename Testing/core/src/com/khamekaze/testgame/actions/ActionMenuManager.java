@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.entity.Enemy;
 import com.khamekaze.testgame.entity.Entity;
 import com.khamekaze.testgame.entity.EntityManager;
@@ -15,10 +16,8 @@ import com.khamekaze.testgame.input.InputManager;
 
 public class ActionMenuManager {
 	
-	private boolean actionMenuOpen = false, attackMenuOpen = false;
 	private int waiting = 0;
 	private ActionMenu actionMenu;
-	private ShapeRenderer shapeRenderer;
 	private Spell currentSpell = null;
 	
 	private InputManager inputManager;
@@ -28,11 +27,9 @@ public class ActionMenuManager {
 		this.inputManager = inputManager;
 		this.entityManager = entityManager;
 		actionMenu = new ActionMenu(entityManager);
-		shapeRenderer = new ShapeRenderer();
 	}
 	
 	public void update(Entity e) {
-		actionMenu.update();
 		openActionMenu(e);
 		selectAction();
 		if(waiting < 50)

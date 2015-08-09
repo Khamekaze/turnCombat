@@ -1,5 +1,6 @@
 package com.khamekaze.testgame.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -23,11 +24,19 @@ public class Enemy extends Entity {
 			passedTime = waitTime;
 		}
 		
-		if(passedTime < waitTime) {
-			passedTime++;
+		if(!getWaitingForAction()) {
+			if(passedTime < waitTime) {
+				passedTime++;
+			}
 		}
 		
 		percentReady = (passedTime * 100) / waitTime;
+		
+		if(percentReady >= 100) {
+			setAtbFull(true);
+		} else {
+			setAtbFull(false);
+		}
 		
 	}
 	
@@ -36,6 +45,8 @@ public class Enemy extends Entity {
 		sb.draw(texture, pos.x, pos.y);
 		sb.draw(loader, pos.x + 300, pos.y - 5, percentReady, 10);
 		sb.draw(readyBar, pos.x + 300, pos.y - 5);
+		font.setColor(Color.BLACK);
+		font.draw(sb, Integer.toString(hp), pos.x + hitBox.width, pos.y + hitBox.height + 10);
 	}
 
 }

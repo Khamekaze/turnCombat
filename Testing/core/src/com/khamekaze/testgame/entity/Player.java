@@ -1,5 +1,6 @@
 package com.khamekaze.testgame.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -42,11 +43,19 @@ public class Player extends Entity {
 			passedTime = waitTime;
 		}
 		
-		if(passedTime < waitTime) {
-			passedTime++;
+		if(!getWaitingForAction()) {
+			if(passedTime < waitTime) {
+				passedTime++;
+			}
 		}
 		
 		percentReady = (passedTime * 100) / waitTime;
+		
+		if(percentReady >= 100) {
+			setAtbFull(true);
+		} else {
+			setAtbFull(false);
+		}
 	}
 	
 	@Override
@@ -54,6 +63,8 @@ public class Player extends Entity {
 		sb.draw(texture, pos.x, pos.y);
 		sb.draw(loader, pos.x, pos.y - 20, percentReady, 10);
 		sb.draw(readyBar, pos.x, pos.y - 20);
+		font.setColor(Color.BLACK);
+		font.draw(sb, Integer.toString(hp), pos.x + hitBox.width, pos.y + hitBox.height + 10);
 	}
 	
 	public Array<Item> getItems() {

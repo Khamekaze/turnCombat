@@ -35,22 +35,6 @@ public class ActionMenu {
 		currentMenu = ATTACK_MENU;
 	}
 	
-	public void update() {
-//		if(e instanceof Player) {
-//			x = e.getHitbox().getX();
-//			y = e.getHitbox().getY();
-//			width = e.getHitbox().getWidth();
-//			height = e.getHitbox().getHeight();
-//			leftX = x - 60;
-//			leftY = y;
-//			topX = x + width / 2 - 30;
-//			topY = y + height;
-//			rightX = x + width;
-//			rightY = y;
-//		}
-		
-	}
-	
 	public void loadMenuButtons() {
 		//Base menu
 		attackButton = new Button(540, 90, 60, 60, "AttackButton");
@@ -107,6 +91,7 @@ public class ActionMenu {
 			break;
 			
 		case USE_ITEM:
+			break;
 			
 		default:
 			break;

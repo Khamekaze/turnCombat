@@ -1,5 +1,7 @@
 package com.khamekaze.testgame.entity;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -25,6 +27,30 @@ public class EntityManager {
 	public void update() {
 		for(Entity e : entities) {
 			e.update();
+			e.hasAttacked = false;
+			if(e.getAtbFull()){
+				player.setWaitingForAction(true);
+				for(Enemy enemy : enemiesArr) {
+					enemy.setWaitingForAction(true);
+				}
+				if(e instanceof Enemy && !e.hasAttacked) {
+					System.out.println("Enemy Attacking");
+					e.attack(player);
+					player.setWaitingForAction(false);
+					player.hasAttacked = false;
+					for(Enemy enemy : enemiesArr) {
+						enemy.setWaitingForAction(false);
+						enemy.resetActionTime();
+					}
+				}
+			} else {
+				player.setWaitingForAction(false);
+				player.hasAttacked = true;
+				for(Enemy enemy : enemiesArr) {
+					enemy.setWaitingForAction(false);
+					enemy.hasAttacked = true;
+				}
+			}
 		}
 	}
 	
