@@ -44,7 +44,7 @@ public class MainGame extends ApplicationAdapter {
 		if(ScreenManager.getCurrentScreen() != null)
 			ScreenManager.getCurrentScreen().update();
 		
-		fps.log();
+//		fps.log();
 	}
 	
 	@Override

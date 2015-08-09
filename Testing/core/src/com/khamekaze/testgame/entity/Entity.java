@@ -62,4 +62,13 @@ public abstract class Entity {
 			hp = maxHp;
 	}
 	
+	public float getPassedTime() {
+		return passedTime;
+	}
+	
+	public void resetActionTime() {
+		percentReady = 0;
+		passedTime = 0;
+	}
+	
 }

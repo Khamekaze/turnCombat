@@ -9,11 +9,12 @@ import com.khamekaze.testgame.gui.Button;
 public class ActionMenu {
 	
 	public static final int CLOSED = 80085, BASE_MENU = 0, ATTACK_MENU = 1, MAGIC_MENU = 2, ITEM_MENU = 3, NORMAL_ATTACK = 4,
-							SPECIAL_ATTACK = 5;
+							SPECIAL_ATTACK = 5, OFFENSIVE_SPELL = 6, DEFENSIVE_SPELL = 7, OFFENSIVE_ITEM = 8, DEFENSIVE_ITEM = 9;
 	private int currentMenu;
 	private float x, y, width, height, leftX, leftY, topX, topY, rightX, rightY;
 	private Array<Button> buttons;
 	private ItemMenu itemMenu;
+	private MagicMenu magicMenu;
 	private EntityManager entityManager;
 	
 	private Button attackButton, itemButton, magicButton, normalAttackButton, specialAttackButton;
@@ -22,6 +23,7 @@ public class ActionMenu {
 		currentMenu = CLOSED;
 		this.entityManager = entityManager;
 		itemMenu = new ItemMenu(entityManager.getPlayer());
+		magicMenu = new MagicMenu(entityManager.getPlayer());
 		loadMenuButtons();
 	}
 	
@@ -94,10 +96,23 @@ public class ActionMenu {
 			break;
 			
 		case MAGIC_MENU:
+			magicMenu.render(sb);
 			break;
 			
 		case ITEM_MENU:
 			itemMenu.render(sb);
+			break;
+			
+		case OFFENSIVE_SPELL:
+			break;
+			
+		case DEFENSIVE_SPELL:
+			break;
+			
+		case OFFENSIVE_ITEM:
+			break;
+			
+		case DEFENSIVE_ITEM:
 			break;
 			
 		default:
@@ -119,6 +134,10 @@ public class ActionMenu {
 	
 	public ItemMenu getItemMenu() {
 		return itemMenu;
+	}
+	
+	public MagicMenu getMagicMenu() {
+		return magicMenu;
 	}
 	
 }

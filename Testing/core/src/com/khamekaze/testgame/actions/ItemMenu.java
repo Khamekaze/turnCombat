@@ -23,7 +23,7 @@ public class ItemMenu {
 		this.player = player;
 		items = player.getItems();
 		font = new BitmapFont();
-		itemMenuTexture = TextureManager.ITEM_MENU_TEXTURE;
+		itemMenuTexture = TextureManager.COMBAT_MENU_TEXTURE;
 	}
 	
 	public void render(SpriteBatch sb) {

@@ -17,11 +17,15 @@ public class TextureManager {
 	public static Texture OPEN = new Texture(Gdx.files.internal("open.png"));
 	public Texture MENU_BUTTON = new Texture(Gdx.files.internal("menuButton.png"));
 	
-	//ItemMenu
-	public static Texture ITEM_MENU_TEXTURE = new Texture(Gdx.files.internal("itemMenuTexture.png"));
+	//ItemMenu / MagicMenu
+	public static Texture COMBAT_MENU_TEXTURE = new Texture(Gdx.files.internal("itemMenuTexture.png"));
 	
 	//Items
 	public Texture ITEM_POTION = new Texture(Gdx.files.internal("itemPotion.png"));
 	public Texture ITEM_BOMB = new Texture(Gdx.files.internal("itemBomb.png"));
+	
+	//Spells
+	public Texture SPELL_HEAL = new Texture(Gdx.files.internal("spellHeal.png"));
+	public Texture SPELL_FIRE = new Texture(Gdx.files.internal("spellFire.png"));
 
 }
