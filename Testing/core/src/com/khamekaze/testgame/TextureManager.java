@@ -16,5 +16,12 @@ public class TextureManager {
 	//ActionMenu
 	public static Texture OPEN = new Texture(Gdx.files.internal("open.png"));
 	public Texture MENU_BUTTON = new Texture(Gdx.files.internal("menuButton.png"));
+	
+	//ItemMenu
+	public static Texture ITEM_MENU_TEXTURE = new Texture(Gdx.files.internal("itemMenuTexture.png"));
+	
+	//Items
+	public Texture ITEM_POTION = new Texture(Gdx.files.internal("itemPotion.png"));
+	public Texture ITEM_BOMB = new Texture(Gdx.files.internal("itemBomb.png"));
 
 }

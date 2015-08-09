@@ -2,7 +2,7 @@ package com.khamekaze.testgame.actions;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.khamekaze.testgame.entity.Entity;
+import com.khamekaze.testgame.entity.EntityManager;
 import com.khamekaze.testgame.entity.Player;
 import com.khamekaze.testgame.gui.Button;
 
@@ -13,11 +13,15 @@ public class ActionMenu {
 	private int currentMenu;
 	private float x, y, width, height, leftX, leftY, topX, topY, rightX, rightY;
 	private Array<Button> buttons;
+	private ItemMenu itemMenu;
+	private EntityManager entityManager;
 	
 	private Button attackButton, itemButton, magicButton, normalAttackButton, specialAttackButton;
 
-	public ActionMenu() {
+	public ActionMenu(EntityManager entityManager) {
 		currentMenu = CLOSED;
+		this.entityManager = entityManager;
+		itemMenu = new ItemMenu(entityManager.getPlayer());
 		loadMenuButtons();
 	}
 	
@@ -93,6 +97,7 @@ public class ActionMenu {
 			break;
 			
 		case ITEM_MENU:
+			itemMenu.render(sb);
 			break;
 			
 		default:
@@ -110,6 +115,10 @@ public class ActionMenu {
 	
 	public Array<Button> getButtons() {
 		return buttons;
+	}
+	
+	public ItemMenu getItemMenu() {
+		return itemMenu;
 	}
 	
 }

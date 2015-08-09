@@ -36,7 +36,7 @@ public class EntityManager {
 		entities.add(entity);
 	}
 	
-	public Entity getPlayer() {
+	public Player getPlayer() {
 		return player;
 	}
 	

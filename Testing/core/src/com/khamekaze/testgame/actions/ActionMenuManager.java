@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.khamekaze.testgame.entity.Entity;
 import com.khamekaze.testgame.entity.EntityManager;
+import com.khamekaze.testgame.entity.Item;
 import com.khamekaze.testgame.entity.Player;
 import com.khamekaze.testgame.gui.Button;
 import com.khamekaze.testgame.input.InputManager;
@@ -23,7 +24,7 @@ public class ActionMenuManager {
 	public ActionMenuManager(InputManager inputManager, EntityManager entityManager) {
 		this.inputManager = inputManager;
 		this.entityManager = entityManager;
-		actionMenu = new ActionMenu();
+		actionMenu = new ActionMenu(entityManager);
 		shapeRenderer = new ShapeRenderer();
 	}
 	
@@ -62,6 +63,10 @@ public class ActionMenuManager {
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 					actionMenu.setCurrentMenu(ActionMenu.ATTACK_MENU);
 					waiting = 0;
+				} else if(inputManager.getMouseHitbox().overlaps(b.getHitbox()) && b.getName() == "ItemButton" &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+					actionMenu.setCurrentMenu(ActionMenu.ITEM_MENU);
+					waiting = 0;
 				}
 			}
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.ATTACK_MENU) {
@@ -93,6 +98,22 @@ public class ActionMenuManager {
 				Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			actionMenu.setCurrentMenu(ActionMenu.ATTACK_MENU);
 			waiting = 0;
+		} else if(actionMenu.getCurrentMenu() == ActionMenu.ITEM_MENU) {
+			for(Item item : actionMenu.getItemMenu().getItems()) {
+				if(inputManager.getMouseHitbox().overlaps(item.getHitbox()) &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+					item.selectItem();
+					waiting = 0;
+					System.out.println(item.getName() + " " + item.getIsSelected());
+				}
+			}
+			
+			if(actionMenu.getCurrentMenu() == ActionMenu.ITEM_MENU &&
+					inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
+					Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+				actionMenu.setCurrentMenu(ActionMenu.BASE_MENU);
+				waiting = 0;
+			}
 		}
 	}
 }

@@ -10,7 +10,7 @@ public abstract class Entity {
 	
 	protected Texture texture;
 	protected Vector2 pos;
-	protected int hp, attack;
+	protected int hp, attack, maxHp;
 	protected Rectangle hitBox;
 	protected float waitTime, passedTime = 0, percentReady = 0;
 	
@@ -20,6 +20,7 @@ public abstract class Entity {
 		this.hp = hp;
 		this.attack = attack;
 		this.waitTime = waitTime;
+		maxHp = hp;
 		hitBox = new Rectangle(pos.x, pos.y, texture.getWidth(), texture.getHeight());
 	}
 	
@@ -45,6 +46,20 @@ public abstract class Entity {
 	
 	public float getPercentReady() {
 		return percentReady;
+	}
+	
+	public int getHp() {
+		return hp;
+	}
+	
+	public void takeDamage(int amount) {
+		hp = hp - amount;
+	}
+	
+	public void restoreHp(int amount) {
+		hp = hp + amount;
+		if(hp > maxHp)
+			hp = maxHp;
 	}
 	
 }

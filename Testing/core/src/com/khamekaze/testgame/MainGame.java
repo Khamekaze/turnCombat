@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.khamekaze.testgame.screen.CombatScreen;
 import com.khamekaze.testgame.screen.ScreenManager;
@@ -14,11 +15,13 @@ public class MainGame extends ApplicationAdapter {
 	private FPSLogger fps;
 	
 	SpriteBatch batch;
+	private BitmapFont font;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		fps = new FPSLogger();
+		font = new BitmapFont();
 		ScreenManager.setScreen(new CombatScreen());
 	}
 	
@@ -27,6 +30,7 @@ public class MainGame extends ApplicationAdapter {
 		if(ScreenManager.getCurrentScreen() != null)
 			ScreenManager.getCurrentScreen().dispose();
 		batch.dispose();
+		font.dispose();
 	}
 
 	@Override
