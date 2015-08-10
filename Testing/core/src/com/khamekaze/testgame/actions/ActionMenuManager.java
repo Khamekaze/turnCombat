@@ -110,7 +110,6 @@ public class ActionMenuManager {
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 					item.selectItem();
 					waiting = 0;
-					System.out.println(item.getName() + " " + item.getIsSelected());
 				}
 			}
 			
@@ -132,7 +131,6 @@ public class ActionMenuManager {
 					spell.selectSpell();
 					currentSpell = spell;
 					waiting = 0;
-					System.out.println("Selected spell");
 					actionMenu.setCurrentMenu(ActionMenu.USE_SPELL);
 				}
 			}
@@ -147,11 +145,9 @@ public class ActionMenuManager {
 				waiting = 0;
 			}
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.USE_SPELL) {
-			System.out.println("USE SPELL");
 			if(currentSpell.getType() == Spell.DEFENSIVE) {
 				if(inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
-					System.out.println("USING DEFENSIVE SPELL");
 					entityManager.getPlayer().restoreHp(currentSpell.getAmount());
 					entityManager.getPlayer().resetActionTime();
 					currentSpell = null;
@@ -167,7 +163,6 @@ public class ActionMenuManager {
 				for(Enemy e : entityManager.getEnemies()) {
 					if(inputManager.getMouseHitbox().overlaps(e.getHitbox()) &&
 							Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
-						System.out.println("USING OFFENSIVE SPELL");
 						e.takeDamage(currentSpell.getAmount());
 						player.resetActionTime();
 						currentSpell = null;

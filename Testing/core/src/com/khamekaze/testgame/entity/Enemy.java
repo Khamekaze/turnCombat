@@ -11,8 +11,8 @@ public class Enemy extends Entity {
 	private TextureManager textureManager;
 	private Texture loader, readyBar;
 
-	public Enemy(Vector2 pos, int hp, int attack, int waitTime) {
-		super(TextureManager.ENEMY, pos, hp, attack, waitTime);
+	public Enemy(Vector2 pos, int hp, int attack, int waitTime, int level) {
+		super(TextureManager.ENEMY, pos, hp, attack, waitTime, level);
 		textureManager = new TextureManager();
 		readyBar = textureManager.READYBAR;
 		loader = textureManager.READYLOADER;
@@ -46,7 +46,7 @@ public class Enemy extends Entity {
 		sb.draw(loader, pos.x + 300, pos.y - 5, percentReady, 10);
 		sb.draw(readyBar, pos.x + 300, pos.y - 5);
 		font.setColor(Color.BLACK);
-		font.draw(sb, Integer.toString(hp), pos.x + hitBox.width, pos.y + hitBox.height + 10);
+		font.draw(sb, Integer.toString(hp) + "/" + Integer.toString(maxHp), pos.x + hitBox.width, pos.y + hitBox.height + 10);
 	}
 
 }

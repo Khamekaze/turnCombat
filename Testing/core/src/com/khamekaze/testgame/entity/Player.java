@@ -16,8 +16,8 @@ public class Player extends Entity {
 	private Array<Item> items;
 	private Array<Spell> spells;
 
-	public Player(Vector2 pos, int hp, int attack, int waitTime) {
-		super(TextureManager.PLAYER, pos, hp, attack, waitTime);
+	public Player(Vector2 pos, int hp, int attack, int waitTime, int level) {
+		super(TextureManager.PLAYER, pos, hp, attack, waitTime, level);
 		textureManager = new TextureManager();
 		loader = textureManager.READYLOADER;
 		readyBar = textureManager.READYBAR;
@@ -64,7 +64,7 @@ public class Player extends Entity {
 		sb.draw(loader, pos.x, pos.y - 20, percentReady, 10);
 		sb.draw(readyBar, pos.x, pos.y - 20);
 		font.setColor(Color.BLACK);
-		font.draw(sb, Integer.toString(hp), pos.x + hitBox.width, pos.y + hitBox.height + 10);
+		font.draw(sb, Integer.toString(hp) + "/" + Integer.toString(maxHp), pos.x + hitBox.width, pos.y + hitBox.height + 10);
 	}
 	
 	public Array<Item> getItems() {

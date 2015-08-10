@@ -5,23 +5,25 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public abstract class Entity {
 	
 	protected Texture texture;
 	protected Vector2 pos;
 	protected BitmapFont font;
-	protected int hp, attack, maxHp;
+	protected int hp, attack, maxHp, level, xp, xpToNextLevel, xpReceived, enemiesKilled, combinedEnemeyLevels;
 	protected Rectangle hitBox;
 	protected float waitTime, passedTime = 0, percentReady = 0;
-	protected boolean atbFull = false, waitingForAction = false, hasAttacked = false;
+	protected boolean atbFull = false, waitingForAction = false, hasAttacked = false, recievedXp = false;
 	
-	public Entity(Texture texture, Vector2 pos, int hp, int attack, int waitTime) {
+	public Entity(Texture texture, Vector2 pos, int hp, int attack, int waitTime, int level) {
 		this.texture = texture;
 		this.pos = pos;
 		this.hp = hp;
 		this.attack = attack;
 		this.waitTime = waitTime;
+		this.level = level;
 		maxHp = hp;
 		hitBox = new Rectangle(pos.x, pos.y, texture.getWidth(), texture.getHeight());
 		font = new BitmapFont();
@@ -33,6 +35,28 @@ public abstract class Entity {
 	
 	public void render(SpriteBatch sb) {
 		sb.draw(texture, pos.x, pos.y);
+	}
+	
+	public void getXpReceived(Array<Enemy> entities) {
+		enemiesKilled = 0;
+		combinedEnemeyLevels = 0;
+		if(!recievedXp) {
+			for(Entity e : entities) {
+				enemiesKilled++;
+				combinedEnemeyLevels += e.level;
+			}
+		}
+		
+		xpReceived = combinedEnemeyLevels * 10 + (enemiesKilled * 10);
+		recievedXp = true;
+	}
+	
+	public void calculateXpToLevel() {
+		xpToNextLevel = (level * 10);
+		if(xp >= xpToNextLevel) {
+			xp = xp - xpToNextLevel;
+			level++;
+		}
 	}
 	
 	public void attack(Entity e) {
@@ -93,6 +117,14 @@ public abstract class Entity {
 	
 	public void setWaitingForAction(boolean waitingForAction) {
 		this.waitingForAction = waitingForAction;
+	}
+	
+	public boolean hasRecievedXp() {
+		return recievedXp;
+	}
+	
+	public void setRecievedXp(boolean recievedXp) {
+		this.recievedXp = recievedXp;
 	}
 	
 }
