@@ -12,7 +12,7 @@ public abstract class Entity {
 	protected Texture texture;
 	protected Vector2 pos;
 	protected BitmapFont font;
-	protected int hp, attack, maxHp, level, xp, xpToNextLevel, xpReceived, enemiesKilled, combinedEnemeyLevels;
+	protected int hp, attack, maxHp, level, xp, xpToNextLevel, xpLeftToNextLevel, xpReceived, enemiesKilled, combinedEnemeyLevels;
 	protected Rectangle hitBox;
 	protected float waitTime, passedTime = 0, percentReady = 0;
 	protected boolean atbFull = false, waitingForAction = false, hasAttacked = false, recievedXp = false;
@@ -47,15 +47,28 @@ public abstract class Entity {
 			}
 		}
 		
-		xpReceived = combinedEnemeyLevels * 10 + (enemiesKilled * 10);
+		xpReceived = combinedEnemeyLevels * 5 + (enemiesKilled * 5);
+		xp = xpReceived;
 		recievedXp = true;
+	}
+	
+	public void adjustStats() {
+		if(level > 1) {
+			maxHp += (level * 3);
+			hp = maxHp;
+			attack += (level * 2);
+		}
 	}
 	
 	public void calculateXpToLevel() {
 		xpToNextLevel = (level * 10);
-		if(xp >= xpToNextLevel) {
+		xpLeftToNextLevel = xpToNextLevel - xp;
+		if(xp >= xpToNextLevel || xpLeftToNextLevel == 0) {
+			System.out.println("LEVEL UP");
 			xp = xp - xpToNextLevel;
 			level++;
+			xpToNextLevel = (level * 10);
+			xpLeftToNextLevel = xpToNextLevel - xp;
 		}
 	}
 	
@@ -125,6 +138,30 @@ public abstract class Entity {
 	
 	public void setRecievedXp(boolean recievedXp) {
 		this.recievedXp = recievedXp;
+	}
+	
+	public int getCurrentLevel() {
+		return level;
+	}
+	
+	public int getAttackDamage() {
+		return attack;
+	}
+	
+	public int getXp() {
+		return xp;
+	}
+	
+	public int getXpToNextLevel() {
+		return xpToNextLevel;
+	}
+	
+	public int getXpLeftToLevel() {
+		return xpLeftToNextLevel;
+	}
+	
+	public void setHp(int hp) {
+		this.hp = hp;
 	}
 	
 }

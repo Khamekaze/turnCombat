@@ -3,7 +3,6 @@ package com.khamekaze.testgame.actions;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.entity.EntityManager;
-import com.khamekaze.testgame.entity.Player;
 import com.khamekaze.testgame.gui.Button;
 
 public class ActionMenu {
@@ -11,17 +10,14 @@ public class ActionMenu {
 	public static final int CLOSED = 80085, BASE_MENU = 0, ATTACK_MENU = 1, MAGIC_MENU = 2, ITEM_MENU = 3, NORMAL_ATTACK = 4,
 							SPECIAL_ATTACK = 5, USE_SPELL = 6, USE_ITEM = 7;
 	private int currentMenu;
-	private float x, y, width, height, leftX, leftY, topX, topY, rightX, rightY;
 	private Array<Button> buttons;
 	private ItemMenu itemMenu;
 	private MagicMenu magicMenu;
-	private EntityManager entityManager;
 	
 	private Button attackButton, itemButton, magicButton, normalAttackButton, specialAttackButton;
 
 	public ActionMenu(EntityManager entityManager) {
 		currentMenu = CLOSED;
-		this.entityManager = entityManager;
 		itemMenu = new ItemMenu(entityManager.getPlayer());
 		magicMenu = new MagicMenu(entityManager.getPlayer());
 		loadMenuButtons();

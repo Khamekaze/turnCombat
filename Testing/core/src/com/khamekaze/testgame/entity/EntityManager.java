@@ -47,7 +47,7 @@ public class EntityManager {
 					}
 				} else if(e.hp <= 0) {
 					if(e instanceof Enemy) {
-						over = new CombatOver(CombatOver.PLAYER_WINS, e);
+						over = new CombatOver(CombatOver.PLAYER_WINS, player);
 						fightOver = true;
 					} else if(e instanceof Player) {
 						over = new CombatOver(CombatOver.ENEMY_WINS, e);

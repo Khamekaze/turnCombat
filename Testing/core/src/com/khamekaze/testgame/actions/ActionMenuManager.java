@@ -3,8 +3,6 @@ package com.khamekaze.testgame.actions;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.entity.Enemy;
 import com.khamekaze.testgame.entity.Entity;
 import com.khamekaze.testgame.entity.EntityManager;
@@ -52,6 +50,10 @@ public class ActionMenuManager {
 					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
 					waiting = 0;
 				}
+			}
+		} else if(Gdx.input.isKeyPressed(Input.Keys.X)) {
+			for(Enemy enemies : entityManager.getEnemies()) {
+				enemies.setHp(0);
 			}
 		}
 	}

@@ -1,10 +1,8 @@
 package com.khamekaze.testgame.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector3;
 import com.khamekaze.testgame.actions.ActionMenuManager;
 import com.khamekaze.testgame.camera.OrthoCamera;
 import com.khamekaze.testgame.entity.Entity;

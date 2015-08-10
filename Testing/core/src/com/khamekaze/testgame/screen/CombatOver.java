@@ -14,7 +14,7 @@ public class CombatOver {
 	private BitmapFont font;
 	private Entity entity;
 	
-	private int xp, winner;
+	private int winner;
 	
 	public CombatOver(int winner, Entity entity) {
 		this.winner = winner;
@@ -29,6 +29,8 @@ public class CombatOver {
 			font.draw(sb, "VICTORY!", MainGame.WIDTH / 2, MainGame.HEIGHT / 2);
 			entity.getXpReceived(entities);
 			entity.calculateXpToLevel();
+			entity.adjustStats();
+			ScreenManager.setScreen(new VictoryScreen(entity));
 			break;
 			
 		case ENEMY_WINS:

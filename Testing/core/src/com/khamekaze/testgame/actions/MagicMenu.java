@@ -14,7 +14,6 @@ public class MagicMenu {
 	private Player player;
 	private Texture magicMenuTexture;
 	private BitmapFont font;
-	private boolean hasUsedSpell = false;
 	
 	public MagicMenu(Player player) {
 		this.player = player;
