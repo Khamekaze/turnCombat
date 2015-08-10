@@ -13,11 +13,13 @@ public class ActionMenu {
 	private Array<Button> buttons;
 	private ItemMenu itemMenu;
 	private MagicMenu magicMenu;
+	private EntityManager entityManager;
 	
 	private Button attackButton, itemButton, magicButton, normalAttackButton, specialAttackButton;
 
 	public ActionMenu(EntityManager entityManager) {
 		currentMenu = CLOSED;
+		this.entityManager = entityManager;
 		itemMenu = new ItemMenu(entityManager.getPlayer());
 		magicMenu = new MagicMenu(entityManager.getPlayer());
 		loadMenuButtons();
@@ -64,15 +66,14 @@ public class ActionMenu {
 			
 		case ATTACK_MENU:
 			normalAttackButton.render(sb);
+			if(entityManager.getPlayer().getSpecialAttackCharge() == 0)
 			specialAttackButton.render(sb);
 			break;
 			
 		case NORMAL_ATTACK:
-			System.out.println("Normal Attack");
 			break;
 			
 		case SPECIAL_ATTACK:
-			System.out.println("Special Attack");
 			break;
 			
 		case MAGIC_MENU:

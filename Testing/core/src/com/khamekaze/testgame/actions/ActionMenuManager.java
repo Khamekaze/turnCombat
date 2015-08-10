@@ -76,13 +76,14 @@ public class ActionMenuManager {
 				}
 			}
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.ATTACK_MENU) {
+			Player player = entityManager.getPlayer();
 			for(Button b : actionMenu.getButtons()) {
 				if(inputManager.getMouseHitbox().overlaps(b.getHitbox()) && b.getName() == "NormalAttackButton" &&
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 					actionMenu.setCurrentMenu(ActionMenu.NORMAL_ATTACK);
 					waiting = 0;
 				} else if(inputManager.getMouseHitbox().overlaps(b.getHitbox()) && b.getName() == "SpecialAttackButton" &&
-						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50 && player.getSpecialAttackCharge() == 0) {
 					actionMenu.setCurrentMenu(ActionMenu.SPECIAL_ATTACK);
 					waiting = 0;
 				}
@@ -106,6 +107,32 @@ public class ActionMenuManager {
 			waiting = 0;
 			
 			//Item menu
+		} else if(actionMenu.getCurrentMenu() == ActionMenu.NORMAL_ATTACK) {
+			Player player = entityManager.getPlayer();
+			for(Enemy enemy : entityManager.getEnemies()) {
+				if(inputManager.getMouseHitbox().overlaps(enemy.getHitbox()) &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+					enemy.takeDamage(player.getAttackDamage());
+					player.updateSpecialAttackCharge();
+					player.resetActionTime();
+					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
+					waiting = 0;
+				}
+			}
+			
+		} else if(actionMenu.getCurrentMenu() == ActionMenu.SPECIAL_ATTACK) {
+			Player player = entityManager.getPlayer();
+			for(Enemy enemy : entityManager.getEnemies()) {
+				if(inputManager.getMouseHitbox().overlaps(enemy.getHitbox()) &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50 && player.getSpecialAttackCharge() == 0) {
+					enemy.takeDamage(player.getSpecialAttack());
+					player.updateSpecialAttackCharge();
+					player.resetActionTime();
+					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
+					waiting = 0;
+				}
+			}
+			
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.ITEM_MENU) {
 			for(Item item : actionMenu.getItemMenu().getItems()) {
 				if(inputManager.getMouseHitbox().overlaps(item.getHitbox()) &&
@@ -151,6 +178,7 @@ public class ActionMenuManager {
 				if(inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 					entityManager.getPlayer().restoreHp(currentSpell.getAmount());
+					entityManager.getPlayer().updateSpecialAttackCharge();
 					entityManager.getPlayer().resetActionTime();
 					currentSpell = null;
 					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
@@ -166,6 +194,7 @@ public class ActionMenuManager {
 					if(inputManager.getMouseHitbox().overlaps(e.getHitbox()) &&
 							Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 						e.takeDamage(currentSpell.getAmount());
+						player.updateSpecialAttackCharge();
 						player.resetActionTime();
 						currentSpell = null;
 						actionMenu.setCurrentMenu(ActionMenu.CLOSED);

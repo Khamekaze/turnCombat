@@ -12,7 +12,8 @@ public abstract class Entity {
 	protected Texture texture;
 	protected Vector2 pos;
 	protected BitmapFont font;
-	protected int hp, attack, maxHp, level, xp, xpToNextLevel, xpLeftToNextLevel, xpReceived, enemiesKilled, combinedEnemeyLevels;
+	protected int hp, attack, maxHp, level, xp, xpToNextLevel, xpLeftToNextLevel, xpReceived, enemiesKilled, combinedEnemeyLevels,
+				  specialAttack, specialAttackCharge;
 	protected Rectangle hitBox;
 	protected float waitTime, passedTime = 0, percentReady = 0;
 	protected boolean atbFull = false, waitingForAction = false, hasAttacked = false, recievedXp = false;
@@ -25,6 +26,8 @@ public abstract class Entity {
 		this.waitTime = waitTime;
 		this.level = level;
 		maxHp = hp;
+		specialAttack = attack + (level * 8);
+		specialAttackCharge = 5;
 		hitBox = new Rectangle(pos.x, pos.y, texture.getWidth(), texture.getHeight());
 		font = new BitmapFont();
 	}
@@ -64,7 +67,6 @@ public abstract class Entity {
 		xpToNextLevel = (level * 10);
 		xpLeftToNextLevel = xpToNextLevel - xp;
 		if(xp >= xpToNextLevel || xpLeftToNextLevel == 0) {
-			System.out.println("LEVEL UP");
 			xp = xp - xpToNextLevel;
 			level++;
 			xpToNextLevel = (level * 10);
@@ -116,6 +118,14 @@ public abstract class Entity {
 		hasAttacked = true;
 	}
 	
+	public void updateSpecialAttackCharge() {
+		if(specialAttackCharge > 0) {
+			specialAttackCharge--;
+		} else if(specialAttackCharge <= 0) {
+			specialAttackCharge = 5;
+		}
+	}
+	
 	public boolean getAtbFull() {
 		return atbFull;
 	}
@@ -162,6 +172,18 @@ public abstract class Entity {
 	
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+	
+	public int getSpecialAttack() {
+		return specialAttack;
+	}
+	
+	public int getSpecialAttackCharge() {
+		return specialAttackCharge;
+	}
+	
+	public void setSpecialAttackCharge(int charge) {
+		this.specialAttackCharge = charge;
 	}
 	
 }
