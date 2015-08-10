@@ -17,6 +17,7 @@ public class ActionMenuManager {
 	private int waiting = 0;
 	private ActionMenu actionMenu;
 	private Spell currentSpell = null;
+	private Item currentItem = null;
 	
 	private InputManager inputManager;
 	private EntityManager entityManager;
@@ -138,6 +139,8 @@ public class ActionMenuManager {
 				if(inputManager.getMouseHitbox().overlaps(item.getHitbox()) &&
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 					item.selectItem();
+					currentItem = item;
+					actionMenu.setCurrentMenu(ActionMenu.USE_ITEM);
 					waiting = 0;
 				}
 			}
@@ -147,6 +150,7 @@ public class ActionMenuManager {
 					Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 				for(Item item : actionMenu.getItemMenu().getItems()) {
 					item.setIsSelected(false);
+					currentItem = null;
 				}
 				actionMenu.setCurrentMenu(ActionMenu.BASE_MENU);
 				waiting = 0;
@@ -204,6 +208,39 @@ public class ActionMenuManager {
 						System.out.println("Going back to magic menu");
 						actionMenu.getMagicMenu().resetSpells();
 						actionMenu.setCurrentMenu(ActionMenu.MAGIC_MENU);
+					}
+				}
+			}
+		} else if(actionMenu.getCurrentMenu() == ActionMenu.USE_ITEM) {
+			Player player = entityManager.getPlayer();
+			if(currentItem.getType() == Item.DEFENSIVE) {
+				if(inputManager.getMouseHitbox().overlaps(player.getHitbox()) &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+					player.restoreHp(currentItem.getAmount());
+					player.updateSpecialAttackCharge();
+					player.resetActionTime();
+					currentItem = null;
+					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
+					waiting = 0;
+				} else if(!inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
+						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+					actionMenu.getItemMenu().resetItems();
+					actionMenu.setCurrentMenu(ActionMenu.ITEM_MENU);
+				}
+			} else if(currentItem.getType() == Item.OFFENSIVE) {
+				for(Enemy e : entityManager.getEnemies()) {
+					if(inputManager.getMouseHitbox().overlaps(e.getHitbox()) &&
+							Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+						e.takeDamage(currentItem.getAmount());
+						player.updateSpecialAttackCharge();
+						player.resetActionTime();
+						currentItem = null;
+						actionMenu.setCurrentMenu(ActionMenu.CLOSED);
+						waiting = 0;
+					} else if(!inputManager.getMouseHitbox().overlaps(e.getHitbox()) &&
+							Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
+						actionMenu.getItemMenu().resetItems();
+						actionMenu.setCurrentMenu(ActionMenu.ITEM_MENU);
 					}
 				}
 			}

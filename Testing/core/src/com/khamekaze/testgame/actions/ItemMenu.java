@@ -47,6 +47,12 @@ public class ItemMenu {
 		return selected;
 	}
 	
+	public void resetItems() {
+		for(Item item : items) {
+			item.setIsSelected(false);
+		}
+	}
+	
 	public Array<Item> getItems() {
 		return items;
 	}
