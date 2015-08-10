@@ -60,6 +60,8 @@ public class ActionMenuManager {
 	}
 	
 	public void selectAction() {
+		
+		//BASE MENU, CHOOSE SUB MENU
 		if(actionMenu.getCurrentMenu() == ActionMenu.BASE_MENU) {
 			for(Button b : actionMenu.getButtons()) {
 				if(inputManager.getMouseHitbox().overlaps(b.getHitbox()) && b.getName() == "AttackButton" &&
@@ -76,6 +78,8 @@ public class ActionMenuManager {
 					waiting = 0;
 				}
 			}
+			
+			//CHOOSE NORMAL OR SPECIAL ATTACK
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.ATTACK_MENU) {
 			Player player = entityManager.getPlayer();
 			for(Button b : actionMenu.getButtons()) {
@@ -90,12 +94,15 @@ public class ActionMenuManager {
 				}
 			}
 			
+			//GO BACK TO BASE MENU FROM ATTACK MENU
 			if(actionMenu.getCurrentMenu() == ActionMenu.ATTACK_MENU &&
 					inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
 					Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
 				actionMenu.setCurrentMenu(ActionMenu.BASE_MENU);
 				waiting = 0;
 			}
+			
+			//GO BACK TO ATTACK MENU
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.NORMAL_ATTACK &&
 				inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
 				Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -107,7 +114,7 @@ public class ActionMenuManager {
 			actionMenu.setCurrentMenu(ActionMenu.ATTACK_MENU);
 			waiting = 0;
 			
-			//Item menu
+			//USE NORMAL ATTACK
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.NORMAL_ATTACK) {
 			Player player = entityManager.getPlayer();
 			for(Enemy enemy : entityManager.getEnemies()) {
@@ -121,6 +128,7 @@ public class ActionMenuManager {
 				}
 			}
 			
+			//USE SPECIAL ATTACK
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.SPECIAL_ATTACK) {
 			Player player = entityManager.getPlayer();
 			for(Enemy enemy : entityManager.getEnemies()) {
@@ -134,6 +142,7 @@ public class ActionMenuManager {
 				}
 			}
 			
+			//SELECT ITEM
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.ITEM_MENU) {
 			for(Item item : actionMenu.getItemMenu().getItems()) {
 				if(inputManager.getMouseHitbox().overlaps(item.getHitbox()) &&
@@ -145,6 +154,7 @@ public class ActionMenuManager {
 				}
 			}
 			
+			//BACK TO BASE MENU FROM ITEM MENU
 			if(actionMenu.getCurrentMenu() == ActionMenu.ITEM_MENU &&
 					inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
 					Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50) {
@@ -156,7 +166,7 @@ public class ActionMenuManager {
 				waiting = 0;
 			}
 			
-			//Magic Menu
+			//MAGIC MENU
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.MAGIC_MENU) {
 			for(Spell spell : actionMenu.getMagicMenu().getSpells()) {
 				if(inputManager.getMouseHitbox().overlaps(spell.getHitbox()) &&
@@ -168,7 +178,7 @@ public class ActionMenuManager {
 				}
 			}
 			
-			//Go back to base menu
+			//GO BACK TO BASE MENU FROM MAGIC MENU
 			if(actionMenu.getCurrentMenu() == ActionMenu.MAGIC_MENU &&
 					inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
 					Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -177,6 +187,8 @@ public class ActionMenuManager {
 				actionMenu.setCurrentMenu(ActionMenu.BASE_MENU);
 				waiting = 0;
 			}
+			
+			//USE SPELL
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.USE_SPELL) {
 			if(currentSpell.getType() == Spell.DEFENSIVE) {
 				if(inputManager.getMouseHitbox().overlaps(entityManager.getPlayer().getHitbox()) &&
@@ -211,6 +223,8 @@ public class ActionMenuManager {
 					}
 				}
 			}
+			
+			//USE ITEM
 		} else if(actionMenu.getCurrentMenu() == ActionMenu.USE_ITEM) {
 			Player player = entityManager.getPlayer();
 			if(currentItem.getType() == Item.DEFENSIVE) {
@@ -244,12 +258,6 @@ public class ActionMenuManager {
 					}
 				}
 			}
-		}
-	}
-	
-	public void resetSpell() {
-		for(Spell spell : actionMenu.getMagicMenu().getSpells()) {
-			spell.setIsSelected(false);
 		}
 	}
 	

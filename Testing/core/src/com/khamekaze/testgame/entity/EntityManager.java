@@ -36,7 +36,6 @@ public class EntityManager {
 						enemy.setWaitingForAction(true);
 					}
 					if(e instanceof Enemy && !e.hasAttacked) {
-						System.out.println("Enemy Attacking");
 						e.attack(player);
 						player.setWaitingForAction(false);
 						player.hasAttacked = false;
