@@ -16,11 +16,20 @@ public class CombatScreen extends Screen {
 	private InputManager inputManager;
 	private ActionMenuManager actionMenuManager;
 	private ShapeRenderer shapeRenderer;
+	
+	private int enemies;
+	
+	public CombatScreen(int enemies) {
+		this.enemies = enemies;
+	}
 
 	@Override
 	public void create() {
 		camera = new OrthoCamera();
-		entityManager = new EntityManager(1);
+		if(enemies != 0)
+			entityManager = new EntityManager(enemies);
+		else 
+			entityManager = new EntityManager(1);
 		inputManager = new InputManager(camera);
 		actionMenuManager = new ActionMenuManager(inputManager, entityManager);
 		shapeRenderer = new ShapeRenderer();

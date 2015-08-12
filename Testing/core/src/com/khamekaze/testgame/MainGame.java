@@ -19,7 +19,7 @@ public class MainGame extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		ScreenManager.setScreen(new CombatScreen());
+		ScreenManager.setScreen(new CombatScreen(1));
 	}
 	
 	@Override

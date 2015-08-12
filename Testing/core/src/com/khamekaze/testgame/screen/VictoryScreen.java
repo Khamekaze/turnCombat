@@ -18,6 +18,8 @@ public class VictoryScreen extends Screen {
 		this.player = player;
 		stats = "HP: " + Integer.toString(player.getHp()) + " LEVEL: " + Integer.toString(player.getCurrentLevel()) + " ATTACK: " + Integer.toString(player.getAttackDamage()) + 
 				" XP: " + Integer.toString(player.getXp()) + " XP TO NEXT LEVEL: " + Integer.toString(player.getXpLeftToLevel()); 
+		
+		ScreenManager.setScreen(new LootScreen(player));
 	}
 
 	@Override
