@@ -121,9 +121,11 @@ public abstract class Entity {
 	public void updateSpecialAttackCharge() {
 		if(specialAttackCharge > 0) {
 			specialAttackCharge--;
-		} else if(specialAttackCharge <= 0) {
-			specialAttackCharge = 5;
 		}
+	}
+	
+	public void resetSpecialAttackCharge() {
+		specialAttackCharge = 5;
 	}
 	
 	public boolean getAtbFull() {

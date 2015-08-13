@@ -135,7 +135,7 @@ public class ActionMenuManager {
 				if(inputManager.getMouseHitbox().overlaps(enemy.getHitbox()) &&
 						Gdx.input.isButtonPressed(Input.Buttons.LEFT) && waiting == 50 && player.getSpecialAttackCharge() == 0) {
 					enemy.takeDamage(player.getSpecialAttack());
-					player.updateSpecialAttackCharge();
+					player.resetSpecialAttackCharge();
 					player.resetActionTime();
 					actionMenu.setCurrentMenu(ActionMenu.CLOSED);
 					waiting = 0;
