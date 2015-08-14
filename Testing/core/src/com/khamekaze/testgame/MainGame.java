@@ -12,7 +12,7 @@ public class MainGame extends ApplicationAdapter {
 	
 	public static int WIDTH = 800, HEIGHT = 480;
 	
-	SpriteBatch batch;
+	private SpriteBatch batch;
 	private BitmapFont font;
 	
 	@Override

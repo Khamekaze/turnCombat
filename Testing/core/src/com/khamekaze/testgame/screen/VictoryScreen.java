@@ -5,21 +5,24 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.khamekaze.testgame.MainGame;
 import com.khamekaze.testgame.entity.Entity;
+import com.khamekaze.testgame.entity.Player;
+import com.khamekaze.testgame.location.DestinationLocation;
+import com.khamekaze.testgame.location.OriginLocation;
 
 public class VictoryScreen extends Screen {
 	
 	private BitmapFont font;
 	SpriteBatch batch;
 	
-	private Entity player;
+	private Player player;
 	private String stats;
 	
+	
 	public VictoryScreen(Entity player) {
-		this.player = player;
+		this.player = (Player) player;
 		stats = "HP: " + Integer.toString(player.getHp()) + " LEVEL: " + Integer.toString(player.getCurrentLevel()) + " ATTACK: " + Integer.toString(player.getAttackDamage()) + 
 				" XP: " + Integer.toString(player.getXp()) + " XP TO NEXT LEVEL: " + Integer.toString(player.getXpLeftToLevel()); 
 		
-		ScreenManager.setScreen(new LootScreen(player));
 	}
 
 	@Override
@@ -31,7 +34,7 @@ public class VictoryScreen extends Screen {
 
 	@Override
 	public void update() {
-		
+		ScreenManager.setScreen(new TravelScreen((Player) player, new OriginLocation("FROM", 0, 0), new DestinationLocation("TO", 1, 1500)));
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class VictoryScreen extends Screen {
 
 	@Override
 	public void dispose() {
-		
+		batch.dispose();
 	}
 
 	@Override

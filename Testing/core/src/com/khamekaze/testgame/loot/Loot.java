@@ -72,5 +72,9 @@ public class Loot {
 	public Array<Equipment> getLoot() {
 		return loot;
 	}
+	
+	public Array<Item> getItems() {
+		return items;
+	}
 
 }

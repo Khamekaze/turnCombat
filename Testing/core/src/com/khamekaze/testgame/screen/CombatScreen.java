@@ -70,7 +70,7 @@ public class CombatScreen extends Screen {
 
 	@Override
 	public void dispose() {
-		
+
 	}
 
 	@Override

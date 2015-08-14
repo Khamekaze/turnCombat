@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.TextureManager;
+import com.khamekaze.testgame.loot.Equipment;
 
 public class Player extends Entity {
 	
@@ -14,6 +15,7 @@ public class Player extends Entity {
 	private Item lowPotion, lowBomb;
 	private Spell lowHeal, lowFire;
 	private Array<Item> items;
+	private Array<Equipment> equipment;
 	private Array<Spell> spells;
 
 	public Player(Vector2 pos, int hp, int attack, int waitTime, int level) {
@@ -28,6 +30,9 @@ public class Player extends Entity {
 		items = new Array<Item>();
 		items.add(lowPotion);
 		items.add(lowBomb);
+		
+		//Equipment
+		equipment = new Array<Equipment>();
 		
 		//Spells
 		lowHeal = new Spell("Low Heal", Spell.DEFENSIVE, 25, textureManager.SPELL_HEAL);
@@ -73,6 +78,18 @@ public class Player extends Entity {
 	
 	public Array<Spell> getSpells() {
 		return spells;
+	}
+	
+	public Array<Equipment> getEquipment() {
+		return equipment;
+	}
+	
+	public void addEquipmentToInventory(Array<Equipment> loot) {
+		equipment.addAll(loot);
+	}
+	
+	public void addItemToInventory(Array<Item> newItems) {
+		items.addAll(newItems);
 	}
 
 }
