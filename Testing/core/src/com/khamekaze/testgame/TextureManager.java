@@ -27,5 +27,9 @@ public class TextureManager {
 	//Spells
 	public Texture SPELL_HEAL = new Texture(Gdx.files.internal("spellHeal.png"));
 	public Texture SPELL_FIRE = new Texture(Gdx.files.internal("spellFire.png"));
+	
+	//Event Banners
+	public static Texture COMBAT_BANNER = new Texture(Gdx.files.internal("battleEvent.png"));
+	public static Texture LOOT_BANNER = new Texture(Gdx.files.internal("lootEvent.png"));
 
 }

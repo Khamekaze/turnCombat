@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.MainGame;
+import com.khamekaze.testgame.TextureManager;
 import com.khamekaze.testgame.entity.Entity;
 import com.khamekaze.testgame.event.CombatEvent;
 import com.khamekaze.testgame.event.Event;
@@ -72,6 +73,13 @@ public class Travel {
 			
 		} else {
 			sb.begin();
+			if(currentEvent instanceof CombatEvent) {
+				sb.draw(TextureManager.COMBAT_BANNER, MainGame.WIDTH / 2 - TextureManager.COMBAT_BANNER.getWidth() / 2,
+						MainGame.HEIGHT / 2 + TextureManager.COMBAT_BANNER.getHeight() / 2);
+			} else if(currentEvent instanceof LootEvent) {
+				sb.draw(TextureManager.LOOT_BANNER, MainGame.WIDTH / 2 - TextureManager.LOOT_BANNER.getWidth() / 2,
+						MainGame.HEIGHT / 2 + TextureManager.LOOT_BANNER.getHeight() / 2);
+			}
 			font.draw(sb, String.valueOf(currentEvent.getEventType()), MainGame.WIDTH / 2, MainGame.HEIGHT / 2);
 			sb.end();
 		}
