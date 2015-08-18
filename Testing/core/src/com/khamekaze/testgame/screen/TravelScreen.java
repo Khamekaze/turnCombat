@@ -19,7 +19,7 @@ public class TravelScreen extends Screen {
 		this.player = player;
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
-		travel = new Travel(fromLocation, toLocation);
+		travel = new Travel(fromLocation, toLocation, player);
 	}
 
 	@Override

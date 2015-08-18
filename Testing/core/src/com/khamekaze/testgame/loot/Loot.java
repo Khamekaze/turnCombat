@@ -22,12 +22,6 @@ public class Loot {
 		loot = new Array<Equipment>();
 		items = new Array<Item>();
 		generateLoot(player.getCurrentLevel());
-		for(Equipment e : loot) {
-			System.out.println(e.name + " " + e.level);
-		}
-		for(Item it : items) {
-			System.out.println(it.getName() + " " + it.getAmount());
-		}
 	}
 	
 	public void generateLoot(int level) {

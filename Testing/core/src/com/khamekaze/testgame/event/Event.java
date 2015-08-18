@@ -2,7 +2,9 @@ package com.khamekaze.testgame.event;
 
 public abstract class Event {
 	
-	public static final int COMBAT_EVENT = 0, BOSS_EVENT = 1, LOOT_EVENT = 2;
+	public static final int COMBAT_EVENT = 0, BOSS_EVENT = 1337, LOOT_EVENT = 1;
+	
+	private int eventLocation = 0;
 	
 	private int eventType;
 	
@@ -12,6 +14,14 @@ public abstract class Event {
 	
 	public Event() {
 		
+	}
+	
+	public void setEventLocation(int eventLocation) {
+		this.eventLocation = eventLocation;
+	}
+	
+	public int getEventLocation() {
+		return eventLocation;
 	}
 	
 	public void setEventType(int eventType) {

@@ -30,11 +30,14 @@ public class VictoryScreen extends Screen {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
+		System.out.println("HELLO");
+		ScreenManager.setScreen(new TravelScreen((Player) player, new OriginLocation("FROM", 0, 0), new DestinationLocation("TO", 1, 1500)));
+		System.out.println("HELLO AGAIN");
 	}
 
 	@Override
 	public void update() {
-		ScreenManager.setScreen(new TravelScreen((Player) player, new OriginLocation("FROM", 0, 0), new DestinationLocation("TO", 1, 1500)));
+		
 	}
 
 	@Override
