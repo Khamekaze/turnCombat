@@ -37,6 +37,7 @@ public class TextureManager {
 	public static Texture GET_LOOT_BUTTON = new Texture(Gdx.files.internal("getLootButton.png"));
 	public static Texture LEAVE_LOOT_BUTTON = new Texture(Gdx.files.internal("leaveItButton.png"));
 	
-	public static Texture CHEST = new Texture(Gdx.files.internal("chest.png"));
+	public static Texture CHEST_CLOSED = new Texture(Gdx.files.internal("chest.png"));
+	public static Texture CHEST_OPEN = new Texture(Gdx.files.internal("chestOpen.png"));
 
 }

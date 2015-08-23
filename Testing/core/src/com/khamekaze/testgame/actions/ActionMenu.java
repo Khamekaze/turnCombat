@@ -35,13 +35,13 @@ public class ActionMenu {
 	
 	public void loadMenuButtons() {
 		//Base menu
-		attackButton = new Button(540, 90, 60, 60, "AttackButton");
-		itemButton = new Button(614, 237, 60, 60, "ItemButton");
-		magicButton = new Button(688, 90, 60, 60, "MagicButton");
+		attackButton = new Button(540, 90, "menuButton", "AttackButton");
+		itemButton = new Button(614, 237, "menuButton", "ItemButton");
+		magicButton = new Button(688, 90, "menuButton", "MagicButton");
 		
 		//Attack menu
-		normalAttackButton = new Button(540, 90, 60, 60, "NormalAttackButton");
-		specialAttackButton = new Button(540, 90 + 60 + 10, 60, 60, "SpecialAttackButton");
+		normalAttackButton = new Button(540, 90,"menuButton", "NormalAttackButton");
+		specialAttackButton = new Button(540, 90 + 60 + 10, "menuButton", "SpecialAttackButton");
 		
 		//Array of buttons
 		buttons = new Array<Button>();

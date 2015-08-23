@@ -3,6 +3,8 @@ package com.khamekaze.testgame.screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.khamekaze.testgame.MainGame;
 import com.khamekaze.testgame.entity.Entity;
 import com.khamekaze.testgame.entity.Player;
@@ -12,6 +14,7 @@ import com.khamekaze.testgame.location.OriginLocation;
 public class VictoryScreen extends Screen {
 	
 	private BitmapFont font;
+	private ShapeRenderer shapes;
 	SpriteBatch batch;
 	
 	private Player player;
@@ -30,21 +33,30 @@ public class VictoryScreen extends Screen {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
-		System.out.println("HELLO");
+		shapes = new ShapeRenderer();
 		ScreenManager.setScreen(new TravelScreen((Player) player, new OriginLocation("FROM", 0, 0), new DestinationLocation("TO", 1, 1500)));
-		System.out.println("HELLO AGAIN");
 	}
 
 	@Override
 	public void update() {
-		
+		camera.update();
+		inputManager.update();
 	}
 
 	@Override
 	public void render(SpriteBatch sb) {
+		
+		sb.setProjectionMatrix(camera.combined);
+		shapes.setProjectionMatrix(camera.combined);
+		
 		sb.begin();
 		font.draw(sb, stats, MainGame.WIDTH / 2 - 300, MainGame.HEIGHT / 2);
 		sb.end();
+		
+		shapes.begin(ShapeType.Line);
+		shapes.setColor(0, 0, 0, 1);
+		shapes.rect(inputManager.getMouseHitbox().getX(), inputManager.getMouseHitbox().getY(), 10, 10);
+		shapes.end();
 	}
 
 	@Override

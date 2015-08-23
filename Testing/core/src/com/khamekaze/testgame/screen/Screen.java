@@ -1,8 +1,13 @@
 package com.khamekaze.testgame.screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.khamekaze.testgame.camera.OrthoCamera;
+import com.khamekaze.testgame.input.InputManager;
 
 public abstract class Screen {
+	
+	public static OrthoCamera camera = new OrthoCamera();
+	public static InputManager inputManager = new InputManager(camera);
 
 	public abstract void create();
 	

@@ -1,49 +1,55 @@
 package com.khamekaze.testgame.screen;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.khamekaze.testgame.MainGame;
-import com.khamekaze.testgame.TextureManager;
-import com.khamekaze.testgame.camera.OrthoCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.khamekaze.testgame.entity.Entity;
 import com.khamekaze.testgame.event.LootEvent;
-import com.khamekaze.testgame.input.InputManager;
 
 public class LootScreen extends Screen {
 	
 	private Entity player;
 	private LootEvent lootEvent;
-	private InputManager inputManager;
-	private OrthoCamera camera;
-	private Texture chest;
+	private ShapeRenderer shapeRenderer;
+	
 	
 	public LootScreen(Entity player, LootEvent lootEvent) {
 		this.player = player;
 		this.lootEvent = lootEvent;
-		chest = TextureManager.CHEST;
 	}
 
 	@Override
 	public void create() {
-		camera = new OrthoCamera();
-		inputManager = new InputManager(camera);
+		shapeRenderer = new ShapeRenderer();
 	}
 
 	@Override
 	public void update() {
-		
+		camera.update();
+		inputManager.update();
+		lootEvent.update();
 	}
 
 	@Override
 	public void render(SpriteBatch sb) {
+		
+		sb.setProjectionMatrix(camera.combined);
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		
 		sb.begin();
-		sb.draw(chest, MainGame.WIDTH / 2 - chest.getWidth() / 2, MainGame.HEIGHT / 2 - chest.getHeight() / 2);
+		lootEvent.render(sb);
 		sb.end();
+		
+		shapeRenderer.setColor(0, 0, 0, 1);
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.rect(inputManager.getMouseHitbox().getX(), inputManager.getMouseHitbox().getY(), 10, 10);
+		shapeRenderer.rect(lootEvent.chestHitbox().getX(), lootEvent.chestHitbox().getY(), lootEvent.chestHitbox().width, lootEvent.chestHitbox().height);
+		shapeRenderer.end();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		
+		camera.resize();
 	}
 
 	@Override

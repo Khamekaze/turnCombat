@@ -9,11 +9,12 @@ public class InputManager {
 	
 	private Rectangle mouseHitbox;
 	private OrthoCamera camera;
-	private Vector3 input = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+	private Vector3 input;
 	
 	public InputManager(OrthoCamera camera) {
 		this.camera = camera;
-		mouseHitbox = new Rectangle(Gdx.input.getX(), Gdx.input.getY(), 10, 10);
+		input = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		mouseHitbox = new Rectangle(input.x, input.y, 10, 10);
 	}
 	
 	public void update() {

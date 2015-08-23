@@ -11,9 +11,7 @@ import com.khamekaze.testgame.input.InputManager;
 
 public class CombatScreen extends Screen {
 	
-	private OrthoCamera camera;
 	private EntityManager entityManager;
-	private InputManager inputManager;
 	private ActionMenuManager actionMenuManager;
 	private ShapeRenderer shapeRenderer;
 	
@@ -25,12 +23,10 @@ public class CombatScreen extends Screen {
 
 	@Override
 	public void create() {
-		camera = new OrthoCamera();
 		if(enemies != 0)
 			entityManager = new EntityManager(enemies);
 		else 
 			entityManager = new EntityManager(1);
-		inputManager = new InputManager(camera);
 		actionMenuManager = new ActionMenuManager(inputManager, entityManager);
 		shapeRenderer = new ShapeRenderer();
 	}
@@ -48,14 +44,16 @@ public class CombatScreen extends Screen {
 
 	@Override
 	public void render(SpriteBatch sb) {
+		
 		sb.setProjectionMatrix(camera.combined);
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		sb.begin();
 		entityManager.render(sb);
 		actionMenuManager.render(sb);
 		sb.end();
-		shapeRenderer.begin(ShapeType.Line);
+		
 		shapeRenderer.setColor(0, 0, 0, 0);
+		shapeRenderer.begin(ShapeType.Line);
 			for(Entity e : entityManager.getEntities()) {
 				shapeRenderer.rect(e.getHitbox().getX(), e.getHitbox().getY(), e.getHitbox().getWidth(), e.getHitbox().getHeight());
 			}
@@ -75,7 +73,7 @@ public class CombatScreen extends Screen {
 
 	@Override
 	public void pause() {
-		
+
 	}
 
 	@Override
