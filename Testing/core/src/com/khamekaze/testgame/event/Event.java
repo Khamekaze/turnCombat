@@ -6,7 +6,7 @@ public abstract class Event {
 	
 	private int eventLocation = 0;
 	
-	private int eventType;
+	protected int eventType;
 	
 	public Event(int eventType) {
 		this.eventType = eventType;

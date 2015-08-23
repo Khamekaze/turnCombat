@@ -19,6 +19,7 @@ public class EventManager {
 	public EventManager(Event event, Player player) {
 		this.event = event;
 		this.player = player;
+		eventType = event.getEventType();
 	}
 	
 	public void excecuteEvent() {
@@ -34,7 +35,7 @@ public class EventManager {
 			break;
 			
 		case Event.LOOT_EVENT:
-			ScreenManager.setScreen(new LootScreen(player));
+			ScreenManager.setScreen(new LootScreen(player, (LootEvent) event));
 			break;
 			
 		default:

@@ -18,6 +18,7 @@ public class LootEvent extends Event {
 		loot = new Loot(player);
 		equipment = loot.getLoot();
 		items = loot.getItems();
+		eventType = Event.LOOT_EVENT;
 	}
 	
 }

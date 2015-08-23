@@ -28,8 +28,15 @@ public class TextureManager {
 	public Texture SPELL_HEAL = new Texture(Gdx.files.internal("spellHeal.png"));
 	public Texture SPELL_FIRE = new Texture(Gdx.files.internal("spellFire.png"));
 	
-	//Event Banners
+	//Event Textures
 	public static Texture COMBAT_BANNER = new Texture(Gdx.files.internal("battleEvent.png"));
+	public static Texture ENGAGE_BUTTON = new Texture(Gdx.files.internal("engageButton.png"));
+	public static Texture FLEE_BUTTON = new Texture(Gdx.files.internal("fleeButton.png"));
+	
 	public static Texture LOOT_BANNER = new Texture(Gdx.files.internal("lootEvent.png"));
+	public static Texture GET_LOOT_BUTTON = new Texture(Gdx.files.internal("getLootButton.png"));
+	public static Texture LEAVE_LOOT_BUTTON = new Texture(Gdx.files.internal("leaveItButton.png"));
+	
+	public static Texture CHEST = new Texture(Gdx.files.internal("chest.png"));
 
 }

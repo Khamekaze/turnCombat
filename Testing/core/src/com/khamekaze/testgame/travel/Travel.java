@@ -3,6 +3,7 @@ package com.khamekaze.testgame.travel;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -16,105 +17,118 @@ import com.khamekaze.testgame.location.Location;
 
 public class Travel {
 	
-	private int stepsTaken, stepsToDestination, stepsLeft, amountOfEvents, locationOfEvent;
+	private int stepsTaken, stepsToDestination, stepsLeft, amountOfEvents, locationOfEvent, distanceToEvent = 0;;
 	private float delta = 0, second = 0;
 	private Random rand;
 	private Location fromLocation, toLocation;
-	private Array<Event> events;
 	private Entity player;
 	private boolean eventInitiated = false;
 	private BitmapFont font = new BitmapFont();
-	private Event currentEvent = null;
+	private Event currentEvent;
 	
 	public Travel(Location fromLocation, Location toLocation, Entity player) {
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
 		this.player = player;
-		events = new Array<Event>();
 		rand = new Random();
 		amountOfEvents = rand.nextInt(15) + 1;
 		stepsTaken = 0;
 		stepsToDestination = fromLocation.calculateDistanceFromLocation(toLocation);
 		locationOfEvent = stepsToDestination;
-		populateEvents();
+		currentEvent = null;
+		generateEvent();
+	}
+	
+	public Travel(Location fromLocation, Location toLocation, Entity player, int stepsTaken) {
+		this.fromLocation = fromLocation;
+		this.toLocation = toLocation;
+		this.player = player;
+		this.stepsTaken = stepsTaken;
+		stepsToDestination = fromLocation.calculateDistanceFromLocation(toLocation) - stepsTaken;
+		currentEvent = null;
 	}
 	
 	public void update() {
 		delta = Gdx.graphics.getDeltaTime();
 		
-		if(!eventInitiated) {
+		if(currentEvent != null && !eventInitiated) {
 			if(second <= 1)
 				second += delta;
-			else if(second >= 1)
-				second = 0;
+			else if(second > 1)
+				second = 1;
 			
-			if(second > 1) {
+			if(second == 1 && distanceToEvent > 0) {
 				stepsTaken++;
 				stepsToDestination--;
+				distanceToEvent--;
+				second = 0;
 				System.out.println(stepsToDestination);
 			}
-
-			checkForEvent();
+			
+			if(distanceToEvent == 0) {
+				eventInitiated = true;
+			}
 		
 		} else {
-				second += delta;
-				if(second >= 60) {
-					second = 0;
-					stepsTaken++;
-					stepsToDestination--;
-					eventInitiated = false;
-				}
+			second += delta;
+			if(second >= 60) {
+				second = 0;
+				stepsTaken++;
+				stepsToDestination--;
+				generateEvent();
+				eventInitiated = false;
+				
+			}
 		}
 		
 	}
 	
 	public void render(SpriteBatch sb) {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		sb.begin();
 		if(!eventInitiated) {
 			
 		} else {
-			sb.begin();
+			
 			if(currentEvent instanceof CombatEvent) {
 				sb.draw(TextureManager.COMBAT_BANNER, MainGame.WIDTH / 2 - TextureManager.COMBAT_BANNER.getWidth() / 2,
 						MainGame.HEIGHT / 2 + TextureManager.COMBAT_BANNER.getHeight() / 2);
+				sb.draw(TextureManager.ENGAGE_BUTTON, MainGame.WIDTH / 2 - TextureManager.ENGAGE_BUTTON.getWidth() - 47,
+						MainGame.HEIGHT / 2 + TextureManager.ENGAGE_BUTTON.getHeight() - 115);
+				sb.draw(TextureManager.FLEE_BUTTON, MainGame.WIDTH / 2 + 47,
+						MainGame.HEIGHT / 2 + TextureManager.FLEE_BUTTON.getHeight() - 115);
 			} else if(currentEvent instanceof LootEvent) {
 				sb.draw(TextureManager.LOOT_BANNER, MainGame.WIDTH / 2 - TextureManager.LOOT_BANNER.getWidth() / 2,
 						MainGame.HEIGHT / 2 + TextureManager.LOOT_BANNER.getHeight() / 2);
+				sb.draw(TextureManager.GET_LOOT_BUTTON, MainGame.WIDTH / 2 - TextureManager.GET_LOOT_BUTTON.getWidth() - 47,
+						MainGame.HEIGHT / 2 + TextureManager.GET_LOOT_BUTTON.getHeight() - 115);
+				sb.draw(TextureManager.LEAVE_LOOT_BUTTON, MainGame.WIDTH / 2 + 47,
+						MainGame.HEIGHT / 2 + TextureManager.LEAVE_LOOT_BUTTON.getHeight() - 115);
 			}
-			font.draw(sb, String.valueOf(currentEvent.getEventType()), MainGame.WIDTH / 2, MainGame.HEIGHT / 2);
-			sb.end();
 		}
+		
+		sb.end();
 	}
 	
-	public void populateEvents() {
-		for(int i = 0; i < amountOfEvents; i++) {
-			int typeOfEvent = rand.nextInt(2);
-			int distanceOfLocation = rand.nextInt(100);
-			locationOfEvent = locationOfEvent - distanceOfLocation;
-			Event event = null;
-			if(typeOfEvent == Event.COMBAT_EVENT) {
-				event = new CombatEvent();
-				event.setEventLocation(locationOfEvent);
-				events.add(event);
-				System.out.println("COMBAT EVENT CREATED!");
-				System.out.println("LOCATION: " + event.getEventLocation());
-			} else if(typeOfEvent == Event.LOOT_EVENT) {
-				event = new LootEvent(player);
-				event.setEventLocation(locationOfEvent);
-				events.add(event);
-				System.out.println("LOOT EVENT CREATED!");
-				System.out.println("LOCATION: " + event.getEventLocation());
-			}
+	public void generateEvent() {
+		eventInitiated = false;
+		currentEvent = null;
+		int typeOfEvent = rand.nextInt(2);
+		distanceToEvent = rand.nextInt(100);
+		Event event = null;
+		if(typeOfEvent == Event.COMBAT_EVENT) {
+			event = new CombatEvent();
+		} else if(typeOfEvent == Event.LOOT_EVENT) {
+			event = new LootEvent(player);
 		}
-	}
-	
-	public void checkForEvent() {
-		for(Event e : events) {
-			if(e.getEventLocation() == stepsToDestination) {
-				System.out.println("NEW EVENT! EVENT IS: " + e.getEventType());
-				currentEvent = e;
-				eventInitiated = true;
-			}
-		}
+		currentEvent = event;
+		locationOfEvent = stepsToDestination - distanceToEvent;
+		currentEvent.setEventLocation(locationOfEvent);
+		event = null;
+		System.out.println("EVENT CREATED!");
+		System.out.println("ID: " + currentEvent.getEventType());
+		System.out.println("LOCATION: " + currentEvent.getEventLocation());
 	}
 	
 	public boolean getEventInitiated() {
