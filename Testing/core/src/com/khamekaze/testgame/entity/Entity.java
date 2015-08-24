@@ -47,34 +47,36 @@ public abstract class Entity {
 	public void getXpReceived(Array<Enemy> entities) {
 		enemiesKilled = 0;
 		combinedEnemeyLevels = 0;
-		if(!recievedXp) {
-			for(Entity e : entities) {
-				enemiesKilled++;
-				combinedEnemeyLevels += e.level;
-			}
+		
+		for(Entity e : entities) {
+			enemiesKilled++;
+			combinedEnemeyLevels += e.level;
 		}
 		
 		xpReceived = combinedEnemeyLevels * 5 + (enemiesKilled * 5);
-		xp = xpReceived;
-		recievedXp = true;
+		xp += xpReceived;
+		
+		calculateXpToLevel();
 	}
 	
-	public void adjustStats() {
-		if(level > 1) {
-			maxHp += (level * 3);
-			hp = maxHp;
-			attack += (level * 2);
-		}
+	public void levelUp() {
+		maxHp += (level * 3);
+		hp = maxHp;
+		attack += (level * 2);
 	}
 	
 	public void calculateXpToLevel() {
 		xpToNextLevel = (level * 10);
 		xpLeftToNextLevel = xpToNextLevel - xp;
-		if(xp >= xpToNextLevel || xpLeftToNextLevel == 0) {
+		if(xpLeftToNextLevel <= 0) {
+			
 			xp = xp - xpToNextLevel;
 			level++;
+			levelUp();
 			xpToNextLevel = (level * 10);
 			xpLeftToNextLevel = xpToNextLevel - xp;
+			System.out.println(xpToNextLevel);
+
 		}
 	}
 	

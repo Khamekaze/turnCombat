@@ -158,8 +158,10 @@ public class Travel {
 	public void generateEvent() {
 		eventInitiated = false;
 		currentEvent = null;
-		int typeOfEvent = rand.nextInt(2);
-		distanceToEvent = rand.nextInt(100);
+//		int typeOfEvent = rand.nextInt(2);
+		int typeOfEvent = 0;
+//		distanceToEvent = rand.nextInt(100);
+		distanceToEvent = 1;
 		Event event = null;
 		if(typeOfEvent == Event.COMBAT_EVENT) {
 			event = new CombatEvent();
@@ -191,7 +193,7 @@ public class Travel {
 			} else if(currentEvent instanceof CombatEvent && eventInitiated) {
 				if(inputManager.getMouseHitbox().overlaps(b.getHitbox()) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 					if(b.getName() == "EngageButton") {
-						ScreenManager.setScreen(new CombatScreen(1));
+						ScreenManager.setScreen(new CombatScreen((Player) player, fromLocation, toLocation, this, 1, stepsTaken));
 					} else if(b.getName() == "FleeButton") {
 						generateEvent();
 						eventInitiated = false;

@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class TextureManager {
 	
+	//Main menu
+	public static Texture PLAY_BUTTON = new Texture(Gdx.files.internal("playButton.png"));
+	public static Texture TITLE_CARD = new Texture(Gdx.files.internal("titleCard.png"));
+	
 	//Entities
 	public static Texture PLAYER = new Texture(Gdx.files.internal("character1.png"));
 	public static Texture ENEMY = new Texture(Gdx.files.internal("creature1.png"));

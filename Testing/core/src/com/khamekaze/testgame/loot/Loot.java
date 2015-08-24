@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.TextureManager;
 import com.khamekaze.testgame.entity.Entity;
+import com.khamekaze.testgame.entity.Player;
 
 public class Loot {
 	
@@ -15,7 +16,7 @@ public class Loot {
 	private Random rand = new Random();
 	private TextureManager textureManager;
 	
-	public Loot(Entity player) {
+	public Loot(Player player) {
 		textureManager = new TextureManager();
 		this.player = player;
 		loot = new Array<Equipment>();
@@ -24,14 +25,16 @@ public class Loot {
 	}
 	
 	public void generateLoot(int level) {
-		int amountOfLoot = rand.nextInt(5);
+		int amountOfLoot = rand.nextInt(3);
 		for(int i = 0; i < amountOfLoot; i++) {
 			Equipment eq = null;
 			int type = rand.nextInt(amountOfLoot);
 			if(i == type) {
-				eq = new Weapon("Sword", player.getCurrentLevel(), 10 + (player.getCurrentLevel() * i));
+				int weaponType = rand.nextInt(4);
+				eq = new Weapon("Sword", player.getCurrentLevel(), 10 + (player.getCurrentLevel() * i), weaponType);
 			} else {
-				eq = new Gear("Gear", player.getCurrentLevel());
+				int gearType = rand.nextInt(4);
+				eq = new Gear("Gear", player.getCurrentLevel(), gearType);
 			}
 			loot.add(eq);
 		}

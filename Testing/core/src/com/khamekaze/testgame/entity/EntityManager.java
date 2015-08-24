@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.MainGame;
-import com.khamekaze.testgame.screen.CombatOver;
 
 public class EntityManager {
 	
@@ -12,11 +11,20 @@ public class EntityManager {
 	private Array<Enemy> enemiesArr = new Array<Enemy>();
 	private final Player player;
 	private Enemy enemy;
-	private CombatOver over;
-	private boolean fightOver = false;
+	private boolean fightOver = false, playerWins = false;
 
 	public EntityManager(int enemies) {
 		player = new Player(new Vector2(MainGame.WIDTH - 200, MainGame.HEIGHT / 2 - 150), 75, 10, 150, 1);
+		for(int i = 0; i < enemies; i++) {
+			enemy = new Enemy(new Vector2(-50, MainGame.HEIGHT / 2 - 175), 150, 20, 200, 2);
+			entities.add(enemy);
+			enemiesArr.add(enemy);
+		}
+		entities.add(player);
+	}
+	
+	public EntityManager(Player player, int enemies) {
+		this.player = player;
 		for(int i = 0; i < enemies; i++) {
 			enemy = new Enemy(new Vector2(-50, MainGame.HEIGHT / 2 - 175), 150, 20, 200, 2);
 			entities.add(enemy);
@@ -46,10 +54,9 @@ public class EntityManager {
 					}
 				} else if(e.hp <= 0) {
 					if(e instanceof Enemy) {
-						over = new CombatOver(CombatOver.PLAYER_WINS, player);
+						playerWins = true;
 						fightOver = true;
 					} else if(e instanceof Player) {
-						over = new CombatOver(CombatOver.ENEMY_WINS, e);
 						fightOver = true;
 					}
 				} else {
@@ -67,10 +74,6 @@ public class EntityManager {
 	public void render(SpriteBatch sb) {
 		for(Entity e : entities) {
 			e.render(sb);
-		}
-		
-		if(over != null) {
-			over.render(sb, enemiesArr);
 		}
 	}
 	
@@ -96,5 +99,13 @@ public class EntityManager {
 	
 	public void setFightOver(boolean fightOver) {
 		this.fightOver = fightOver;
+	}
+	
+	public boolean getPlayerWins() {
+		return playerWins;
+	}
+	
+	public void setPlayerWins(boolean wins) {
+		this.playerWins = wins;
 	}
 }

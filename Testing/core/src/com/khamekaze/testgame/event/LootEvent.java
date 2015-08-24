@@ -56,15 +56,15 @@ public class LootEvent extends Event {
 		System.out.println(equipment.size);
 	}
 	
-	public LootEvent(Player player, Travel travel) {
-		this.player = player;
-		loot = new Loot(player);
-		equipment = loot.getLoot();
-		items = loot.getItems();
-		this.travel = travel;
-		eventType = Event.LOOT_EVENT;
-		input = Screen.inputManager;
-	}
+//	public LootEvent(Player player, Travel travel) {
+//		this.player = player;
+//		loot = new Loot(player);
+//		equipment = loot.getLoot();
+//		items = loot.getItems();
+//		this.travel = travel;
+//		eventType = Event.LOOT_EVENT;
+//		input = Screen.inputManager;
+//	}
 	
 	public void update() {
 		if(waitTime > 0) {
@@ -101,7 +101,7 @@ public class LootEvent extends Event {
 	public void showLoot(SpriteBatch sb) {
 		
 		for(int i = 0; i < equipment.size; i++) {
-
+			
 		}
 		
 		for(int j = 0; j < items.size; j++) {
