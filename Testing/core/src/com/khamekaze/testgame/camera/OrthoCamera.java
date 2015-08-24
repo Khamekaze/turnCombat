@@ -74,4 +74,8 @@ public class OrthoCamera extends OrthographicCamera {
 		setVirtualViewport(virtualViewport);  
 		updateViewport();
 	}
+	
+	public VirtualViewport getVirtualViewport() {
+		return virtualViewport;
+	}
 }

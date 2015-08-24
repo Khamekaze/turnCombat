@@ -2,6 +2,7 @@ package com.khamekaze.testgame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -18,14 +19,18 @@ public class MainMenu {
 	private Button play;
 	private InputManager inputManager;
 	private Sprite sprite;
-	private float scaleWidth = TextureManager.TITLE_CARD.getWidth() / MainGame.WIDTH, scaleHeight = TextureManager.TITLE_CARD.getHeight() / MainGame.HEIGHT;
+	private float scaleWidth = TextureManager.TITLE_CARD.getWidth() / Screen.camera.getVirtualViewport().getWidth(),
+				  scaleHeight = TextureManager.TITLE_CARD.getHeight() / Screen.camera.getVirtualViewport().getHeight();
 
 	public MainMenu() {
 		play = new Button(MainGame.WIDTH / 2 - TextureManager.PLAY_BUTTON.getWidth() / 2,
 						  MainGame.HEIGHT / 2 - 200, TextureManager.PLAY_BUTTON, "PlayButton");
 		sprite = new Sprite(TextureManager.TITLE_CARD);
-		sprite.setSize(MainGame.WIDTH, MainGame.HEIGHT);
+		sprite.getTexture().setFilter(TextureFilter.Linear,
+                TextureFilter.Linear);
+		sprite.setSize(sprite.getWidth() / scaleWidth, sprite.getHeight() / scaleHeight);
 		inputManager = Screen.inputManager;
+		System.out.println(scaleWidth + "     " + scaleHeight);
 	}
 	
 	public void update() {
