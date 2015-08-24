@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.MainGame;
 import com.khamekaze.testgame.TextureManager;
 import com.khamekaze.testgame.entity.Entity;
+import com.khamekaze.testgame.entity.Player;
 import com.khamekaze.testgame.event.CombatEvent;
 import com.khamekaze.testgame.event.Event;
 import com.khamekaze.testgame.event.LootEvent;
@@ -18,16 +19,17 @@ import com.khamekaze.testgame.input.InputManager;
 import com.khamekaze.testgame.location.Location;
 import com.khamekaze.testgame.screen.CombatScreen;
 import com.khamekaze.testgame.screen.LootScreen;
+import com.khamekaze.testgame.screen.Screen;
 import com.khamekaze.testgame.screen.ScreenManager;
 
 public class Travel {
 	
-	private int stepsTaken, stepsToDestination, stepsLeft, locationOfEvent, distanceToEvent = 0;;
+	private int stepsTaken, stepsToDestination, stepsLeft, locationOfEvent, distanceToEvent;
 	private float delta = 0, second = 0;
 	private Random rand;
 	private Location fromLocation, toLocation;
 	private Entity player;
-	private boolean eventInitiated = false;
+	private boolean eventInitiated = false, flipped;
 	private BitmapFont font = new BitmapFont();
 	private Event currentEvent;
 	private Button getLootButton, leaveLootButton, engageButton, fleeButton;
@@ -35,11 +37,12 @@ public class Travel {
 	private Array<Button> buttons = new Array<Button>();
 	
 	
-	public Travel(Location fromLocation, Location toLocation, Entity player, InputManager inputManager) {
+	public Travel(Location fromLocation, Location toLocation, Entity player) {
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
 		this.player = player;
-		this.inputManager = inputManager;
+		distanceToEvent = 0;
+		inputManager = Screen.inputManager;
 		rand = new Random();
 		stepsTaken = 0;
 		stepsToDestination = fromLocation.calculateDistanceFromLocation(toLocation);
@@ -47,7 +50,12 @@ public class Travel {
 		currentEvent = null;
 		loadButtons();
 		
+//		player.getSprite().flip(flipped, false);
+		player.getSprite().setCenter(MainGame.WIDTH / 2, MainGame.HEIGHT / 2 - 100);
+		
 		generateEvent();
+		
+		System.out.println("AFTER");
 	}
 	
 	public Travel(Location fromLocation, Location toLocation, Entity player, int stepsTaken) {
@@ -55,12 +63,20 @@ public class Travel {
 		this.toLocation = toLocation;
 		this.player = player;
 		this.stepsTaken = stepsTaken;
+		inputManager = Screen.inputManager;
 		stepsToDestination = fromLocation.calculateDistanceFromLocation(toLocation) - stepsTaken;
 		currentEvent = null;
+		rand = new Random();
+		distanceToEvent = 0;
+		
+		
+//		player.getSprite().flip(flipped, false);
+		player.getSprite().setCenter(MainGame.WIDTH / 2, MainGame.HEIGHT / 2 - 100);
 		
 		loadButtons();
 		
 		generateEvent();
+		
 		
 	}
 	
@@ -100,6 +116,7 @@ public class Travel {
 	}
 	
 	public void render(SpriteBatch sb) {
+		player.getSprite().draw(sb);
 		
 		if(eventInitiated) {
 			if(currentEvent instanceof CombatEvent) {
@@ -114,7 +131,6 @@ public class Travel {
 				sb.draw(leaveLootButton.getTexture(), leaveLootButton.getX(), leaveLootButton.getY());
 			}
 		} else {
-			
 			
 		}
 		
@@ -148,7 +164,7 @@ public class Travel {
 		if(typeOfEvent == Event.COMBAT_EVENT) {
 			event = new CombatEvent();
 		} else if(typeOfEvent == Event.LOOT_EVENT) {
-			event = new LootEvent(player, stepsTaken, fromLocation, toLocation);
+			event = new LootEvent((Player) player, fromLocation, toLocation, this);
 		}
 		currentEvent = event;
 		locationOfEvent = stepsToDestination - distanceToEvent;
@@ -164,10 +180,12 @@ public class Travel {
 			if(currentEvent instanceof LootEvent && eventInitiated) {
 				if(inputManager.getMouseHitbox().overlaps(b.getHitbox()) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 					if(b.getName() == "GetLootButton") {
-						ScreenManager.setScreen(new LootScreen(player, (LootEvent) currentEvent));
+						LootEvent lootEvent = (LootEvent) currentEvent;
+						currentEvent = null;
+						lootEvent.setStepsTaken(stepsTaken);
+						ScreenManager.setScreen(new LootScreen(player, lootEvent));
 					} else if(b.getName() == "LeaveLootButton") {
 						generateEvent();
-						eventInitiated = false;
 					}
 				}
 			} else if(currentEvent instanceof CombatEvent && eventInitiated) {

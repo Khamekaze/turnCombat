@@ -2,6 +2,7 @@ package com.khamekaze.testgame.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -17,6 +18,7 @@ public abstract class Entity {
 	protected Rectangle hitBox;
 	protected float waitTime, passedTime = 0, percentReady = 0;
 	protected boolean atbFull = false, waitingForAction = false, hasAttacked = false, recievedXp = false;
+	protected Sprite sprite;
 	
 	public Entity(Texture texture, Vector2 pos, int hp, int attack, int waitTime, int level) {
 		this.texture = texture;
@@ -30,6 +32,8 @@ public abstract class Entity {
 		specialAttackCharge = 5;
 		hitBox = new Rectangle(pos.x, pos.y, texture.getWidth(), texture.getHeight());
 		font = new BitmapFont();
+		sprite = new Sprite(texture);
+		sprite.flip(true, false);
 	}
 	
 	public void update() {
@@ -186,6 +190,10 @@ public abstract class Entity {
 	
 	public void setSpecialAttackCharge(int charge) {
 		this.specialAttackCharge = charge;
+	}
+	
+	public Sprite getSprite() {
+		return sprite;
 	}
 	
 }

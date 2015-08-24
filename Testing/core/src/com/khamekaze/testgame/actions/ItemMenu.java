@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.TextureManager;
 import com.khamekaze.testgame.entity.Enemy;
 import com.khamekaze.testgame.entity.Entity;
-import com.khamekaze.testgame.entity.Item;
 import com.khamekaze.testgame.entity.Player;
+import com.khamekaze.testgame.loot.Item;
 
 public class ItemMenu {
 	
@@ -20,7 +20,7 @@ public class ItemMenu {
 
 	public ItemMenu(Player player) {
 		this.player = player;
-		items = player.getItems();
+		items = player.getInventory().getItems();
 		font = new BitmapFont();
 		itemMenuTexture = TextureManager.COMBAT_MENU_TEXTURE;
 	}

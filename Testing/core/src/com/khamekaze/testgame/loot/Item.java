@@ -1,4 +1,4 @@
-package com.khamekaze.testgame.entity;
+package com.khamekaze.testgame.loot;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;

@@ -34,7 +34,7 @@ public class VictoryScreen extends Screen {
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 		shapes = new ShapeRenderer();
-		ScreenManager.setScreen(new TravelScreen((Player) player, new OriginLocation("FROM", 0, 0), new DestinationLocation("TO", 1, 1500)));
+		ScreenManager.setScreen(new TravelScreen((Player) player, new OriginLocation("FROM", 0, 0), new DestinationLocation("TO", 1, 1500), 0));
 	}
 
 	@Override

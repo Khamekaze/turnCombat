@@ -19,16 +19,21 @@ public class TravelScreen extends Screen {
 	private Travel travel;
 	private Location fromLocation, toLocation;
 	private ShapeRenderer shapeRenderer;
+	private int stepsTaken = 0;
 	
-	public TravelScreen(Player player, Location fromLocation, Location toLocation) {
+	public TravelScreen(Player player, Location fromLocation, Location toLocation, int stepsTaken) {
 		this.player = player;
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
+		this.stepsTaken = stepsTaken;
 	}
 	
-	public TravelScreen(Player player, Travel travel) {
+	public TravelScreen(Player player, Location fromLocation, Location toLocation, Travel travel, int stepsTaken) {
 		this.player = player;
+		this.fromLocation = fromLocation;
+		this.toLocation = toLocation;
 		this.travel = travel;
+		this.stepsTaken = stepsTaken;
 	}
 
 	@Override
@@ -36,8 +41,8 @@ public class TravelScreen extends Screen {
 		
 		shapeRenderer = new ShapeRenderer();
 		
-		if(travel == null)
-			travel = new Travel(fromLocation, toLocation, player, inputManager);
+		travel = new Travel(fromLocation, toLocation, player, stepsTaken);
+			
 		font = new BitmapFont();
 	}
 

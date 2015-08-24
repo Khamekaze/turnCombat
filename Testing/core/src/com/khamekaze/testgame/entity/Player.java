@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.TextureManager;
-import com.khamekaze.testgame.loot.Equipment;
+import com.khamekaze.testgame.inventory.Inventory;
+import com.khamekaze.testgame.loot.Item;
 
 public class Player extends Entity {
 	
@@ -14,9 +15,9 @@ public class Player extends Entity {
 	private Texture loader, readyBar;
 	private Item lowPotion, lowBomb;
 	private Spell lowHeal, lowFire;
-	private Array<Item> items;
-	private Array<Equipment> equipment;
 	private Array<Spell> spells;
+	private Inventory inventory;
+	
 
 	public Player(Vector2 pos, int hp, int attack, int waitTime, int level) {
 		super(TextureManager.PLAYER, pos, hp, attack, waitTime, level);
@@ -24,15 +25,17 @@ public class Player extends Entity {
 		loader = textureManager.READYLOADER;
 		readyBar = textureManager.READYBAR;
 		
+//		sprite = new Sprite(TextureManager.PLAYER);
+		
+		inventory = new Inventory();
+		
 		//Items
 		lowPotion = new Item("Low Potion", Item.DEFENSIVE, 25, textureManager.ITEM_POTION);
 		lowBomb = new Item("Low Bomb", Item.OFFENSIVE, 25, textureManager.ITEM_BOMB);
-		items = new Array<Item>();
-		items.add(lowPotion);
-		items.add(lowBomb);
+		inventory.getItems().add(lowPotion);
+		inventory.getItems().add(lowBomb);
 		
 		//Equipment
-		equipment = new Array<Equipment>();
 		
 		//Spells
 		lowHeal = new Spell("Low Heal", Spell.DEFENSIVE, 25, textureManager.SPELL_HEAL);
@@ -72,24 +75,12 @@ public class Player extends Entity {
 		font.draw(sb, Integer.toString(hp) + "/" + Integer.toString(maxHp), pos.x + hitBox.width, pos.y + hitBox.height + 10);
 	}
 	
-	public Array<Item> getItems() {
-		return items;
-	}
-	
 	public Array<Spell> getSpells() {
 		return spells;
 	}
 	
-	public Array<Equipment> getEquipment() {
-		return equipment;
-	}
-	
-	public void addEquipmentToInventory(Array<Equipment> loot) {
-		equipment.addAll(loot);
-	}
-	
-	public void addItemToInventory(Array<Item> newItems) {
-		items.addAll(newItems);
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 }

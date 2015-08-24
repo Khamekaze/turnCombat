@@ -5,7 +5,6 @@ import java.util.Random;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.TextureManager;
 import com.khamekaze.testgame.entity.Entity;
-import com.khamekaze.testgame.entity.Item;
 
 public class Loot {
 	

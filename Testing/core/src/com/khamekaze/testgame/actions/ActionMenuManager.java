@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.khamekaze.testgame.entity.Enemy;
 import com.khamekaze.testgame.entity.Entity;
 import com.khamekaze.testgame.entity.EntityManager;
-import com.khamekaze.testgame.entity.Item;
 import com.khamekaze.testgame.entity.Player;
 import com.khamekaze.testgame.entity.Spell;
 import com.khamekaze.testgame.gui.Button;
 import com.khamekaze.testgame.input.InputManager;
+import com.khamekaze.testgame.loot.Item;
 
 public class ActionMenuManager {
 	

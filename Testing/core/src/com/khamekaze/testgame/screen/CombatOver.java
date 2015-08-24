@@ -25,8 +25,7 @@ public class CombatOver {
 		if(entity instanceof Player) {
 			this.player = (Player) entity;
 			loot = new Loot(player);
-			player.addEquipmentToInventory(loot.getLoot());
-			player.addItemToInventory(loot.getItems());
+			player.getInventory().addLoot(loot.getItems(), loot.getLoot());
 		}
 	}
 	
