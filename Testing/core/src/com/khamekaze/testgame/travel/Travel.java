@@ -158,9 +158,9 @@ public class Travel {
 	public void generateEvent() {
 		eventInitiated = false;
 		currentEvent = null;
-		int typeOfEvent = rand.nextInt(2);
-//		int typeOfEvent = 0;
-		distanceToEvent = rand.nextInt(100);
+//		int typeOfEvent = rand.nextInt(2);
+		int typeOfEvent = 1;
+//		distanceToEvent = rand.nextInt(100);
 		distanceToEvent = 1;
 		Event event = null;
 		if(typeOfEvent == Event.COMBAT_EVENT) {

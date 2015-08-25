@@ -28,6 +28,10 @@ public class TextureManager {
 	public Texture ITEM_POTION = new Texture(Gdx.files.internal("itemPotion.png"));
 	public Texture ITEM_BOMB = new Texture(Gdx.files.internal("itemBomb.png"));
 	
+	//Equipment
+	public Texture GEAR_ICON = new Texture(Gdx.files.internal("gearIcon.png"));
+	public Texture WEAPON_ICON = new Texture(Gdx.files.internal("weaponIcon.png"));
+	
 	//Spells
 	public Texture SPELL_HEAL = new Texture(Gdx.files.internal("spellHeal.png"));
 	public Texture SPELL_FIRE = new Texture(Gdx.files.internal("spellFire.png"));

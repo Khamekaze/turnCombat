@@ -1,6 +1,7 @@
 package com.khamekaze.testgame.loot;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.khamekaze.testgame.TextureManager;
 
 public abstract class Equipment {
 	
@@ -9,10 +10,12 @@ public abstract class Equipment {
 	protected String name;
 	protected int level;
 	protected Texture texture;
+	protected TextureManager textureManager;
 	
 	public Equipment(String name, int level) {
 		this.name = name;
 		this.level = level;
+		textureManager = new TextureManager();
 	}
 	
 	public String getName() {
@@ -25,6 +28,10 @@ public abstract class Equipment {
 	
 	public Texture getTexture() {
 		return texture;
+	}
+	
+	public TextureManager getTextureManager() {
+		return textureManager;
 	}
 	
 }

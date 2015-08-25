@@ -7,20 +7,11 @@ public class Weapon extends Equipment {
 	public Weapon(String name, int level, int damage, int type) {
 		super(name, level);
 		this.damage = damage;
+		texture = textureManager.WEAPON_ICON;
 	}
 	
 	public int getWeaponDamage() {
 		return damage;
 	}
 	
-	public void determineTexture(int type) {
-		if(type == 0) {
-			
-		} else if(type == 1) {
-			
-		} else if(type == 2) {
-			
-		}
-	}
-
 }

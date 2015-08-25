@@ -2,6 +2,8 @@ package com.khamekaze.testgame.event;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -34,6 +36,7 @@ public class LootEvent extends Event {
 	private int waitTime = 30;
 	private Button collectButton;
 	private int stepsTaken;
+	private BitmapFont font = new BitmapFont();
 
 	public LootEvent(Player player, Location fromLocation, Location toLocation, Travel travel) {
 		this.player = player;
@@ -51,6 +54,9 @@ public class LootEvent extends Event {
 		collectButton = new Button(MainGame.WIDTH / 2 - TextureManager.COLLECT_LOOT.getWidth() / 2,
 				MainGame.HEIGHT / 2 + TextureManager.COLLECT_LOOT.getHeight() - 315,
 				TextureManager.COLLECT_LOOT, "CollectLootButton");
+		
+		font.setColor(Color.BLACK);
+		font.getData().setScale(2, 2);
 		
 		System.out.println(items.size);
 		System.out.println(equipment.size);
@@ -101,18 +107,21 @@ public class LootEvent extends Event {
 	public void showLoot(SpriteBatch sb) {
 		
 		for(int i = 0; i < equipment.size; i++) {
-			
+			sb.draw(equipment.get(i).getTexture(), MainGame.WIDTH / 2 - 200 + (i * 100), MainGame.HEIGHT / 2 - 100);
 		}
 		
 		for(int j = 0; j < items.size; j++) {
 			sb.draw(items.get(j).getTexture(), MainGame.WIDTH / 2 - 200 + (j * 100), MainGame.HEIGHT / 2);
 		}
 		
+		font.draw(sb, String.valueOf(loot.getAmountOfCoins()) + " COINS", MainGame.WIDTH / 2 - 200, MainGame.HEIGHT / 2 + 100);
+		
 		sb.draw(collectButton.getTexture(), collectButton.getX(), collectButton.getY());
 	}
 	
 	public void getLoot() {
 		player.getInventory().addLoot(items, equipment);
+		player.addCoins(loot.getAmountOfCoins());
 	}
 	
 	public Rectangle chestHitbox() {

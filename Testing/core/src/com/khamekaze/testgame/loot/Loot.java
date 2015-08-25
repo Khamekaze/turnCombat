@@ -12,9 +12,10 @@ public class Loot {
 	private Array<Equipment> loot;
 	private Array<Item> items;
 	private int amount = 0;
-	private Entity player;
+	private Player player;
 	private Random rand = new Random();
 	private TextureManager textureManager;
+	private int amountOfCoins = 0;
 	
 	public Loot(Player player) {
 		textureManager = new TextureManager();
@@ -51,6 +52,8 @@ public class Loot {
 				items.add(item);
 			}
 		}
+		
+		amountOfCoins = rand.nextInt(100 * player.getCurrentLevel());
 	}
 	
 	public int determineAmount() {
@@ -71,6 +74,10 @@ public class Loot {
 	
 	public Array<Item> getItems() {
 		return items;
+	}
+	
+	public int getAmountOfCoins() {
+		return amountOfCoins;
 	}
 
 }

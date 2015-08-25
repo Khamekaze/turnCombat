@@ -17,6 +17,7 @@ public class Player extends Entity {
 	private Spell lowHeal, lowFire;
 	private Array<Spell> spells;
 	private Inventory inventory;
+	private int coins;
 	
 
 	public Player(Vector2 pos, int hp, int attack, int waitTime, int level) {
@@ -28,6 +29,7 @@ public class Player extends Entity {
 //		sprite = new Sprite(TextureManager.PLAYER);
 		
 		inventory = new Inventory();
+		coins = 0;
 		
 		//Items
 		lowPotion = new Item("Low Potion", Item.DEFENSIVE, 25, textureManager.ITEM_POTION);
@@ -81,6 +83,18 @@ public class Player extends Entity {
 	
 	public Inventory getInventory() {
 		return inventory;
+	}
+	
+	public int getCoins() {
+		return coins;
+	}
+	
+	public void removeCoins(int amount) {
+		coins -= amount;
+	}
+	
+	public void addCoins(int amount) {
+		coins += amount;
 	}
 
 }
