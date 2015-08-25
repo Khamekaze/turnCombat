@@ -77,7 +77,7 @@ public class Travel {
 		
 		generateEvent();
 		
-		
+		System.out.println("COINS: " + player.getCoins());
 	}
 	
 	public void update() {

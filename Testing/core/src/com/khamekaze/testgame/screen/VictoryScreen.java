@@ -53,8 +53,6 @@ public class VictoryScreen extends Screen {
 		this.enemies = enemies;
 		this.stepsTaken = stepsTaken;
 		loot = new Loot(this.player);
-		
-		 
 	}
 
 	@Override
@@ -105,8 +103,10 @@ public class VictoryScreen extends Screen {
 		}
 		
 		for(int j = 0; j < loot.getLoot().size; j++) {
-//			sb.draw(loot.getLoot().get(j).getTexture(), MainGame.WIDTH / 2 - 200 + (j * 100), MainGame.HEIGHT / 2);
+			sb.draw(loot.getLoot().get(j).getTexture(), MainGame.WIDTH / 2 - 200 + (j * 100), MainGame.HEIGHT / 2 - 100);
 		}
+		
+		font.draw(sb, String.valueOf(loot.getAmountOfCoins()) + " COINS", MainGame.WIDTH / 2 - 200, MainGame.HEIGHT / 2 + 100);
 		
 		sb.draw(collectButton.getTexture(), collectButton.getX(), collectButton.getY());
 	}

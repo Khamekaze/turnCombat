@@ -19,6 +19,7 @@ public abstract class Entity {
 	protected float waitTime, passedTime = 0, percentReady = 0;
 	protected boolean atbFull = false, waitingForAction = false, hasAttacked = false, recievedXp = false;
 	protected Sprite sprite;
+	protected int coins;
 	
 	public Entity(Texture texture, Vector2 pos, int hp, int attack, int waitTime, int level) {
 		this.texture = texture;
@@ -34,6 +35,7 @@ public abstract class Entity {
 		font = new BitmapFont();
 		sprite = new Sprite(texture);
 		sprite.flip(true, false);
+		coins = 0;
 	}
 	
 	public void update() {
@@ -180,6 +182,18 @@ public abstract class Entity {
 	
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+	
+	public int getCoins() {
+		return coins;
+	}
+	
+	public void removeCoins(int amount) {
+		coins -= amount;
+	}
+	
+	public void addCoins(int amount) {
+		coins += amount;
 	}
 	
 	public int getSpecialAttack() {

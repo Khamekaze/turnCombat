@@ -1,6 +1,7 @@
 package com.khamekaze.testgame.screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.khamekaze.testgame.MainGame;
 
 public class MainMenuScreen extends Screen {
 	
@@ -20,6 +21,7 @@ public class MainMenuScreen extends Screen {
 
 	@Override
 	public void render(SpriteBatch sb) {
+		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
 		mainMenu.render(sb);
 		sb.end();

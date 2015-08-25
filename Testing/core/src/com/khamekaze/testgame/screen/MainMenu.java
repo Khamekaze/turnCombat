@@ -19,8 +19,8 @@ public class MainMenu {
 	private Button play;
 	private InputManager inputManager;
 	private Sprite sprite;
-	private float scaleWidth = TextureManager.TITLE_CARD.getWidth() / Screen.camera.getVirtualViewport().getWidth(),
-				  scaleHeight = TextureManager.TITLE_CARD.getHeight() / Screen.camera.getVirtualViewport().getHeight();
+	private float scaleWidth = TextureManager.TITLE_CARD.getWidth() / Screen.camera.getVirtualViewport().getVirtualWidth(), 
+				  scaleHeight = TextureManager.TITLE_CARD.getHeight() / Screen.camera.getVirtualViewport().getVirtualHeight();
 
 	public MainMenu() {
 		play = new Button(MainGame.WIDTH / 2 - TextureManager.PLAY_BUTTON.getWidth() / 2,
@@ -28,9 +28,10 @@ public class MainMenu {
 		sprite = new Sprite(TextureManager.TITLE_CARD);
 		sprite.getTexture().setFilter(TextureFilter.Linear,
                 TextureFilter.Linear);
-		sprite.setSize(sprite.getWidth() / scaleWidth, sprite.getHeight() / scaleHeight);
+		sprite.setSize(MainGame.WIDTH, MainGame.HEIGHT);
 		inputManager = Screen.inputManager;
 		System.out.println(scaleWidth + "     " + scaleHeight);
+		System.out.println(Gdx.graphics.getHeight());
 	}
 	
 	public void update() {
