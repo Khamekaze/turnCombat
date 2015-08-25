@@ -37,6 +37,8 @@ public class LootEvent extends Event {
 	private Button collectButton;
 	private int stepsTaken;
 	private BitmapFont font = new BitmapFont();
+	private float centerX = Screen.camera.getVirtualViewport().getWidth() / 2,
+				  centerY = Screen.camera.getVirtualViewport().getHeight() / 2;
 
 	public LootEvent(Player player, Location fromLocation, Location toLocation, Travel travel) {
 		this.player = player;
@@ -49,11 +51,10 @@ public class LootEvent extends Event {
 		eventType = Event.LOOT_EVENT;
 		input = Screen.inputManager;
 		lootChest = new LootChest();
-		lootChest.setPos(MainGame.WIDTH / 2 - lootChest.getTexture().getWidth() / 2, MainGame.HEIGHT / 2 - lootChest.getTexture().getHeight() / 2);
+		lootChest.setPos(centerX - lootChest.getWidth() / 2, centerY - lootChest.getHeight() / 2);
 		
-		collectButton = new Button(MainGame.WIDTH / 2 - TextureManager.COLLECT_LOOT.getWidth() / 2,
-				MainGame.HEIGHT / 2 + TextureManager.COLLECT_LOOT.getHeight() - 315,
-				TextureManager.COLLECT_LOOT, "CollectLootButton");
+		collectButton = new Button((int) centerX - TextureManager.COLLECT_LOOT.getWidth() / 2,
+				                   (int) centerY - 230, TextureManager.COLLECT_LOOT, "CollectLootButton");
 		
 		font.setColor(Color.BLACK);
 		font.getData().setScale(2, 2);
@@ -73,6 +74,9 @@ public class LootEvent extends Event {
 //	}
 	
 	public void update() {
+		
+		updatePositions();
+		
 		if(waitTime > 0) {
 			waitTime--;
 		} else if(waitTime < 0) {
@@ -102,6 +106,14 @@ public class LootEvent extends Event {
 		if(opened) {
 			showLoot(sb);
 		}
+	}
+	
+	public void updatePositions() {
+		centerX = Screen.camera.getVirtualViewport().getWidth() / 2;
+		centerY = Screen.camera.getVirtualViewport().getHeight() / 2;
+		lootChest.setPos(centerX - lootChest.getWidth() / 2, centerY - lootChest.getHeight() / 2);
+		collectButton.setX(centerX - collectButton.getHitbox().getWidth() / 2);
+		collectButton.setY(centerY - 230);
 	}
 	
 	public void showLoot(SpriteBatch sb) {

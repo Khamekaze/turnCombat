@@ -8,7 +8,7 @@ import com.khamekaze.testgame.input.InputManager;
 
 public abstract class Screen {
 	
-	public static final float aspect = MainGame.GAME_WORLD_HEIGHT / MainGame.GAME_WORLD_WIDTH;
+	
 	
 	public static OrthoCamera camera = new OrthoCamera(new VirtualViewport(MainGame.WIDTH, MainGame.HEIGHT));
 	public static InputManager inputManager = new InputManager(camera);

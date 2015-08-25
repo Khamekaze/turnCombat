@@ -12,6 +12,9 @@ public class MainGame extends ApplicationAdapter {
 	
 	public static int WIDTH = 800, HEIGHT = 480;
 	public static int GAME_WORLD_WIDTH = 100, GAME_WORLD_HEIGHT = 50;
+	public static float aspect = (float) GAME_WORLD_HEIGHT / (float) HEIGHT;
+	
+	
 	
 	private SpriteBatch batch;
 	private BitmapFont font;

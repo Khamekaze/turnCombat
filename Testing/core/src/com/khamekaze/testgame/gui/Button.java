@@ -55,6 +55,7 @@ public class Button {
 	
 	public void setX(float x) {
 		this.x = x;
+		button.x = x;
 	}
 	
 	public float getY() {
@@ -63,6 +64,7 @@ public class Button {
 	
 	public void setY(float y) {
 		this.y = y;
+		button.y = y;
 	}
 	
 }

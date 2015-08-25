@@ -25,7 +25,8 @@ import com.khamekaze.testgame.screen.ScreenManager;
 public class Travel {
 	
 	private int stepsTaken, stepsToDestination, stepsLeft, locationOfEvent, distanceToEvent;
-	private float delta = 0, second = 0;
+	private float delta = 0, second = 0, centerX = Screen.camera.getVirtualViewport().getWidth() / 2,
+				   centerY = Screen.camera.getVirtualViewport().getHeight() / 2;
 	private Random rand;
 	private Location fromLocation, toLocation;
 	private Entity player;
@@ -50,8 +51,7 @@ public class Travel {
 		currentEvent = null;
 		loadButtons();
 		
-//		player.getSprite().flip(flipped, false);
-		player.getSprite().setCenter(MainGame.WIDTH / 2, MainGame.HEIGHT / 2 - 100);
+		this.player.getSprite().setCenter(MainGame.WIDTH / 2, MainGame.HEIGHT / 2 - 100);
 		
 		generateEvent();
 		
@@ -70,8 +70,7 @@ public class Travel {
 		distanceToEvent = 0;
 		
 		
-//		player.getSprite().flip(flipped, false);
-		player.getSprite().setCenter(MainGame.WIDTH / 2, MainGame.HEIGHT / 2 - 100);
+		player.getSprite().setCenter(centerX, centerY - 100);
 		
 		loadButtons();
 		
@@ -85,6 +84,8 @@ public class Travel {
 		delta = Gdx.graphics.getDeltaTime();
 		
 		handleInput();
+		
+		updatePositions();
 		
 		if(currentEvent != null && !eventInitiated) {
 			if(second <= 1)
@@ -120,15 +121,15 @@ public class Travel {
 		
 		if(eventInitiated) {
 			if(currentEvent instanceof CombatEvent) {
-				sb.draw(TextureManager.COMBAT_BANNER, MainGame.WIDTH / 2 - TextureManager.COMBAT_BANNER.getWidth() / 2,
-						MainGame.HEIGHT / 2 + TextureManager.COMBAT_BANNER.getHeight() / 2);
-				sb.draw(engageButton.getTexture(), engageButton.getX(), engageButton.getY());
-				sb.draw(fleeButton.getTexture(), fleeButton.getX(), fleeButton.getY());
+				sb.draw(TextureManager.COMBAT_BANNER, centerX - TextureManager.COMBAT_BANNER.getWidth() / 2,
+						centerY + 100);
+				engageButton.render(sb);
+				fleeButton.render(sb);
 			} else if(currentEvent instanceof LootEvent) {
-				sb.draw(TextureManager.LOOT_BANNER, MainGame.WIDTH / 2 - TextureManager.LOOT_BANNER.getWidth() / 2,
-						MainGame.HEIGHT / 2 + TextureManager.LOOT_BANNER.getHeight() / 2);
-				sb.draw(getLootButton.getTexture(), getLootButton.getX(), getLootButton.getY());
-				sb.draw(leaveLootButton.getTexture(), leaveLootButton.getX(), leaveLootButton.getY());
+				sb.draw(TextureManager.LOOT_BANNER, centerX - TextureManager.LOOT_BANNER.getWidth() / 2,
+						centerY + (100));
+				getLootButton.render(sb);
+				leaveLootButton.render(sb);
 			}
 		} else {
 			
@@ -158,10 +159,10 @@ public class Travel {
 	public void generateEvent() {
 		eventInitiated = false;
 		currentEvent = null;
-//		int typeOfEvent = rand.nextInt(2);
-		int typeOfEvent = 1;
-//		distanceToEvent = rand.nextInt(100);
-		distanceToEvent = 1;
+		int typeOfEvent = rand.nextInt(2);
+//		int typeOfEvent = 1;
+		distanceToEvent = rand.nextInt(100);
+//		distanceToEvent = 1;
 		Event event = null;
 		if(typeOfEvent == Event.COMBAT_EVENT) {
 			event = new CombatEvent();
@@ -175,6 +176,21 @@ public class Travel {
 		System.out.println("EVENT CREATED!");
 		System.out.println("ID: " + currentEvent.getEventType());
 		System.out.println("LOCATION: " + currentEvent.getEventLocation());
+	}
+	
+	public void updatePositions() {
+		player.getSprite().setCenter(centerX, centerY - 100);
+		centerX = Screen.camera.getVirtualViewport().getWidth() / 2;
+		centerY = Screen.camera.getVirtualViewport().getHeight() / 2;
+		getLootButton.setX(centerX - getLootButton.getHitbox().getWidth() - 48);
+		getLootButton.setY(centerY + 22);
+		leaveLootButton.setX(centerX + 48);
+		leaveLootButton.setY(centerY + 22);
+		
+		engageButton.setX(centerX - engageButton.getHitbox().getWidth() - 48);
+		engageButton.setY(centerY + 22);
+		fleeButton.setX(centerX + 48);
+		fleeButton.setY(centerY + 22);
 	}
 	
 	public void handleInput() {

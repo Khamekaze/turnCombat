@@ -65,6 +65,7 @@ public abstract class Entity {
 		maxHp += (level * 3);
 		hp = maxHp;
 		attack += (level * 2);
+		specialAttack = attack + (level * 8);
 	}
 	
 	public void calculateXpToLevel() {
