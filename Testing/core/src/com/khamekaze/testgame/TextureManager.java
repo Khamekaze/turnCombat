@@ -36,6 +36,13 @@ public class TextureManager {
 	public Texture SPELL_HEAL = new Texture(Gdx.files.internal("spellHeal.png"));
 	public Texture SPELL_FIRE = new Texture(Gdx.files.internal("spellFire.png"));
 	
+	//Map
+	public static Texture MAP = new Texture(Gdx.files.internal("map.png"));
+	
+	//Travel
+	public static Texture TRAVEL_BACKGROUND = new Texture(Gdx.files.internal("bg.png"));
+	public Texture TRAVEL_BUSH = new Texture(Gdx.files.internal("bush.png"));
+	
 	//Event Textures
 	public static Texture COMBAT_BANNER = new Texture(Gdx.files.internal("battleEvent.png"));
 	public static Texture ENGAGE_BUTTON = new Texture(Gdx.files.internal("engageButton.png"));

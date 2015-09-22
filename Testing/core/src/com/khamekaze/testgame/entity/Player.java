@@ -25,8 +25,6 @@ public class Player extends Entity {
 		loader = textureManager.READYLOADER;
 		readyBar = textureManager.READYBAR;
 		
-//		sprite = new Sprite(TextureManager.PLAYER);
-		
 		inventory = new Inventory();
 		
 		//Items

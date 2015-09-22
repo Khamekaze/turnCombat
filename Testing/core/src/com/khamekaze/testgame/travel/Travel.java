@@ -4,8 +4,10 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.khamekaze.testgame.MainGame;
 import com.khamekaze.testgame.TextureManager;
@@ -36,6 +38,9 @@ public class Travel {
 	private Button getLootButton, leaveLootButton, engageButton, fleeButton;
 	private InputManager inputManager;
 	private Array<Button> buttons = new Array<Button>();
+	private Array<Texture> bushes = new Array<Texture>();
+	private Texture bush = new Texture(Gdx.files.internal("bush.png"));
+	private Rectangle bushBox = new Rectangle();
 	
 	
 	public Travel(Location fromLocation, Location toLocation, Entity player) {
@@ -68,6 +73,8 @@ public class Travel {
 		currentEvent = null;
 		rand = new Random();
 		distanceToEvent = 0;
+		
+		bushBox.set(MainGame.WIDTH, 100, bush.getWidth(), bush.getHeight());
 		
 		
 		player.getSprite().setCenter(centerX, centerY - 100);
@@ -117,7 +124,11 @@ public class Travel {
 	}
 	
 	public void render(SpriteBatch sb) {
+		sb.draw(TextureManager.TRAVEL_BACKGROUND, 0, 0);
+		updateAndRenderBushes(sb);
 		player.getSprite().draw(sb);
+		
+		font.draw(sb, String.valueOf(stepsTaken), MainGame.WIDTH / 2 - 50, 400);
 		
 		if(eventInitiated) {
 			if(currentEvent instanceof CombatEvent) {
@@ -136,6 +147,14 @@ public class Travel {
 		}
 		
 		
+	}
+	
+	public void updateAndRenderBushes(SpriteBatch sb) {
+		bushBox.setX(bushBox.getX() - 1f);
+		sb.draw(bush, bushBox.x, bushBox.y);
+		
+		if(bushBox.getX() < 0 - bushBox.getWidth())
+			bushBox.setX(MainGame.WIDTH);
 	}
 	
 	public void loadButtons() {
